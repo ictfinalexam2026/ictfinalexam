@@ -1,0 +1,2036 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0a0e1a" />
+  <title>WarehouseAI — One‑Page</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E%F0%9F%93%A6%3C/text%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-primary:#0a0e1a;--bg-secondary:#0f1629;--bg-card:#141c2e;
+      --accent-blue:#2563eb;--accent-cyan:#06b6d4;--accent-green:#10b981;
+      --accent-orange:#f59e0b;--accent-red:#ef4444;
+      --text-primary:#f1f5f9;--text-secondary:#94a3b8;--border:#1e2d4a;
+      --glow-blue:0 0 20px rgba(37,99,235,0.4);
+      --glow-cyan:0 0 20px rgba(6,182,212,0.4);
+      --glow-green:0 0 20px rgba(16,185,129,0.35);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text-primary);
+      background:radial-gradient(1200px 600px at 20% 10%, rgba(37,99,235,0.18), transparent 55%),
+                 radial-gradient(900px 500px at 80% 30%, rgba(6,182,212,0.14), transparent 60%),
+                 linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+      min-height:100vh;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    button,input,select{font:inherit;color:inherit}
+
+    .container{width:min(1120px, calc(100% - 48px)); margin:0 auto}
+    .page{padding-top:86px}
+    .section{padding:64px 0}
+    .bg-grid{position:relative; isolation:isolate}
+    .bg-grid::before{
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(to right, rgba(148,163,184,0.08) 1px, transparent 1px),
+                 linear-gradient(to bottom, rgba(148,163,184,0.08) 1px, transparent 1px);
+      background-size:48px 48px; opacity:.35;
+      mask-image:radial-gradient(700px 420px at 50% 10%, #000 55%, transparent 100%);
+      z-index:-1;
+    }
+
+    .glass{backdrop-filter:blur(12px); background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:16px; box-shadow:0 18px 40px rgba(0,0,0,0.35)}
+    .card{padding:20px}
+    .muted{color:var(--text-secondary)}
+    .mono{font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace}
+    .logo-font{font-family:Orbitron, Inter, sans-serif}
+    .gradient-text{background:linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .btn{display:inline-flex;gap:10px;align-items:center;justify-content:center;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);cursor:pointer;transition:all .3s ease;user-select:none}
+    .btn:hover{transform:translateY(-2px); box-shadow:var(--glow-cyan); border-color:rgba(6,182,212,0.35)}
+    .btn:active{transform:scale(.97)}
+    .btn.small{padding:8px 10px;border-radius:10px;font-size:14px}
+    .btn.primary{background:linear-gradient(135deg, rgba(6,182,212,0.25), rgba(37,99,235,0.22)); border-color:rgba(6,182,212,0.35)}
+    .btn.primary:hover{box-shadow:var(--glow-blue)}
+    .btn.danger:hover{box-shadow:0 0 20px rgba(239,68,68,0.28); border-color:rgba(239,68,68,0.35)}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);font-size:14px;transition:all .3s ease}
+    .badge:hover{transform:translateY(-2px); box-shadow:var(--glow-cyan)}
+
+    /* Header */
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;transition:all .3s ease}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .site-header.scrolled{backdrop-filter:blur(20px);background:rgba(10,14,26,0.55);border-bottom:1px solid var(--border)}
+    .logo{display:flex;align-items:center;gap:10px}
+    .logo svg{width:26px;height:26px;filter:drop-shadow(0 0 14px rgba(6,182,212,0.22))}
+    .logo .brand{font-weight:900;letter-spacing:0.5px;font-size:18px}
+    .logo .brand .cyan{color:var(--accent-cyan)}
+    .nav{display:flex;align-items:center;gap:18px}
+    .nav a{position:relative;padding:8px 10px;border-radius:10px;color:var(--text-secondary);transition:all .3s ease}
+    .nav a:hover{color:var(--text-primary);background:rgba(255,255,255,0.04)}
+    .nav a.active{color:var(--accent-cyan)}
+    .nav a.active::after{content:"";position:absolute;left:10px;right:10px;bottom:4px;height:2px;border-radius:999px;background:linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));box-shadow:var(--glow-cyan)}
+    .burger{display:none;gap:6px;flex-direction:column;width:42px;height:42px;justify-content:center;align-items:center;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);cursor:pointer;transition:all .3s ease}
+    .burger:hover{box-shadow:var(--glow-cyan);transform:translateY(-2px)}
+    .burger:active{transform:scale(.97)}
+    .burger span{display:block;width:18px;height:2px;background:rgba(241,245,249,0.9);border-radius:999px}
+    .mobile-nav{display:none;padding:10px 0 14px 0}
+    .mobile-nav.open{display:block}
+    .mobile-nav a{display:flex;padding:12px 12px;border-radius:12px;margin:6px 0;color:var(--text-secondary);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);transition:all .3s ease}
+    .mobile-nav a.active{color:var(--accent-cyan);border-color:rgba(6,182,212,0.35);box-shadow:var(--glow-cyan)}
+
+    /* Footer */
+    .site-footer{border-top:1px solid var(--border);background:rgba(10,14,26,0.45)}
+    .footer-inner{display:grid;grid-template-columns:1.4fr .8fr;gap:24px;padding:28px 0}
+    .footer-right{display:flex;flex-direction:column;gap:14px;align-items:flex-end;justify-content:space-between}
+    .social{display:flex;gap:10px}
+    .icon-btn{display:inline-flex;width:42px;height:42px;align-items:center;justify-content:center;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);transition:all .3s ease}
+    .icon-btn:hover{box-shadow:var(--glow-blue);transform:translateY(-2px)}
+    .icon-btn:active{transform:scale(.97)}
+    .icon-btn svg{width:20px;height:20px;opacity:.9}
+
+    /* Routing */
+    .view{display:none}
+    .view.active{display:block}
+
+    /* Reveal */
+    .reveal{opacity:0; transform:translateY(12px); transition:all .6s ease}
+    .reveal.visible{opacity:1; transform:translateY(0)}
+
+    /* HERO (home) */
+    .hero{min-height:100vh;display:flex;align-items:center;padding:110px 0 72px;position:relative;overflow:hidden}
+    .hero::before{content:"";position:absolute;inset:-2px;background:linear-gradient(to right, rgba(148,163,184,0.10) 1px, transparent 1px),linear-gradient(to bottom, rgba(148,163,184,0.10) 1px, transparent 1px);background-size:70px 70px;opacity:.35;animation:gridMove 10s linear infinite;z-index:-2}
+    .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(900px 500px at 35% 20%, rgba(6,182,212,0.20), transparent 55%);z-index:-2;opacity:.7}
+    @keyframes gridMove{from{transform:translateY(0)}to{transform:translateY(70px)}}
+    .particles{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+    .particle{position:absolute;border-radius:999px;background:rgba(6,182,212,0.25);filter:blur(.2px);animation:float 10s ease-in-out infinite}
+    @keyframes float{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(20px,-30px,0)}100%{transform:translate3d(0,0,0)}}
+    .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center}
+    .hero h1{margin:0;font-family:Orbitron, Inter, sans-serif;font-size:clamp(34px, 4vw, 60px);line-height:1.05;letter-spacing:0.8px}
+    .hero .sub{margin:16px 0 18px;color:var(--text-secondary);font-size:18px}
+    .status-row{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 10px}
+    .badge.online{border-color:rgba(16,185,129,0.35)}
+    .badge .dot{width:10px;height:10px;border-radius:999px;background:rgba(6,182,212,0.9);box-shadow:var(--glow-cyan)}
+    .badge.online .dot{background:rgba(16,185,129,0.95); box-shadow:var(--glow-green)}
+    .counter-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px;margin:18px 0 18px}
+    .metric{padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.04);transition:all .3s ease}
+    .metric:hover{transform:translateY(-4px);box-shadow:var(--glow-cyan);border-color:rgba(6,182,212,0.35)}
+    .metric .value{font-family:Orbitron, Inter, sans-serif;font-weight:900;font-size:28px}
+    .metric .label{margin-top:6px;color:var(--text-secondary);font-size:13px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+
+    /* Quote + goals + advantages (home) */
+    .gradient-border{position:relative}
+    .gradient-border::before{content:"";position:absolute;inset:-1px;border-radius:18px;background:linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));z-index:-1;opacity:.9}
+    .quote-wrap{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:flex-start}
+    .quote-mark{width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:44px;color:var(--accent-cyan);text-shadow:var(--glow-cyan)}
+    .quote-text{margin:0;font-size:16.5px;line-height:1.65;color:rgba(241,245,249,0.92)}
+    .grid-4x2{display:grid;grid-template-columns:repeat(4, 1fr);gap:14px}
+    .goal{padding:18px;border-radius:16px;transition:all .3s ease}
+    .goal:hover{transform:translateY(-4px);box-shadow:var(--glow-blue)}
+    .goal .n{font-family:"JetBrains Mono";color:rgba(148,163,184,0.85);font-size:13px}
+    .goal .t{margin-top:10px;font-weight:600}
+    .adv-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:14px}
+    .adv{padding:22px;transition:all .3s ease}
+    .adv:hover{transform:translateY(-4px);box-shadow:var(--glow-green)}
+    .adv .big{font-family:Orbitron;font-weight:900;font-size:34px}
+    .adv .cap{margin-top:8px;color:var(--text-secondary)}
+
+    /* Video */
+    .video-wrapper{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:rgba(255,255,255,0.03);box-shadow:0 18px 40px rgba(0,0,0,0.35);transition:all .3s ease}
+    .video-wrapper:hover{box-shadow:var(--glow-blue)}
+    .video-wrapper video,.video-wrapper iframe{width:100%;height:100%;display:block;border:0;background:#000}
+    .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px;background:radial-gradient(600px 200px at 50% 40%, rgba(6,182,212,0.16), transparent 60%),rgba(10,14,26,0.35);pointer-events:none;transition:all .3s ease}
+    .video-wrapper.has-src .video-placeholder{opacity:0}
+    .play-icon{width:74px;height:74px;display:flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.06);box-shadow:var(--glow-cyan);font-size:26px}
+
+    /* ABOUT */
+    .cards-3{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px}
+    .cards-3 h3{margin:0 0 10px 0; font-size:18px}
+    .cards-3 p{margin:0; color:rgba(241,245,249,0.88); line-height:1.65}
+    .gallery{display:grid; grid-template-columns:repeat(2, 1fr); gap:14px}
+    .gallery-item{border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.10); position:relative; transition:all .4s ease}
+    .gallery-item:hover{transform:scale(1.03); box-shadow:var(--glow-cyan)}
+    .gallery-item img{width:100%; height:260px; object-fit:cover}
+    .gallery-caption{position:absolute; inset:auto 0 0 0; padding:12px 14px; background:linear-gradient(180deg, transparent, rgba(10,14,26,0.78)); color:rgba(241,245,249,0.95); font-size:14px}
+    .gallery-overlay{position:absolute; inset:0; background:rgba(10,14,26,0.18); opacity:0; transition:all .4s ease}
+    .gallery-item:hover .gallery-overlay{opacity:1}
+    .timeline{position:relative; display:grid; gap:14px; padding-left:22px}
+    .timeline::before{content:""; position:absolute; left:8px; top:6px; bottom:6px; width:3px; border-radius:999px; background:linear-gradient(180deg, var(--accent-blue), var(--accent-green)); box-shadow:0 0 18px rgba(37,99,235,0.22)}
+    .tl-item{position:relative; padding:18px}
+    .tl-item::before{content:""; position:absolute; left:-18px; top:22px; width:14px; height:14px; border-radius:999px; background:rgba(241,245,249,0.12); border:1px solid rgba(255,255,255,0.14); box-shadow:var(--glow-blue)}
+    .chip{display:inline-flex; padding:6px 10px; border-radius:999px; font-size:13px; border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.05)}
+    .chip.blue{border-color:rgba(37,99,235,0.35)}
+    .chip.cyan{border-color:rgba(6,182,212,0.35)}
+    .chip.green{border-color:rgba(16,185,129,0.35)}
+    .chip.orange{border-color:rgba(245,158,11,0.35)}
+    .table-tools{display:flex; gap:10px; flex-wrap:wrap; margin:14px 0}
+    .table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:16px; border:1px solid rgba(255,255,255,0.10); background:rgba(255,255,255,0.03)}
+    .table th,.table td{padding:12px 12px; border-bottom:1px solid rgba(255,255,255,0.08); vertical-align:middle}
+    .table th{text-align:left; color:rgba(241,245,249,0.92); font-weight:600; background:rgba(255,255,255,0.03)}
+    .table tr:last-child td{border-bottom:none}
+    .table .hl{background:rgba(16,185,129,0.12); border-left:3px solid rgba(16,185,129,0.8)}
+    .mini-bar{height:10px; border-radius:999px; background:rgba(148,163,184,0.18); overflow:hidden; border:1px solid rgba(255,255,255,0.10)}
+    .mini-bar > span{display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--accent-cyan), var(--accent-blue)); box-shadow:var(--glow-cyan); transition:width .5s ease}
+    .method-badge{display:inline-flex; margin-left:10px; padding:5px 10px; border-radius:999px; border:1px solid rgba(16,185,129,0.35); background:rgba(16,185,129,0.10); color:rgba(241,245,249,0.92); font-size:12px}
+
+    /* SYSTEM (QR + table + modal + map) */
+    .arch{display:grid;grid-template-columns:repeat(5, 1fr);gap:14px;align-items:stretch;position:relative}
+    .arch-node{padding:18px;text-align:center;transition:all .3s ease;position:relative}
+    .arch-node:hover{transform:scale(1.08);box-shadow:var(--glow-cyan);border-color:rgba(6,182,212,0.32)}
+    .arch-node .ico{font-size:26px;margin-bottom:10px}
+    .arch-node .name{font-weight:700}
+    .arch-node .small{margin-top:6px;color:var(--text-secondary);font-size:13px;line-height:1.5}
+    .tooltip{position:absolute;left:50%;transform:translateX(-50%);bottom:-12px;width:200px;padding:12px;border-radius:14px;opacity:0;pointer-events:none;transition:all .25s ease;border:1px solid rgba(255,255,255,0.10);background:rgba(10,14,26,0.72);backdrop-filter:blur(12px);color:rgba(241,245,249,0.92);box-shadow:0 18px 40px rgba(0,0,0,0.35)}
+    .arch-node:hover .tooltip{opacity:1; bottom:-74px}
+    .sim-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:14px;align-items:start}
+    .frame{width:100%;aspect-ratio:1/1;border-radius:18px;position:relative;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.03);overflow:hidden;display:flex;align-items:center;justify-content:center;transition:all .3s ease}
+    .frame:hover{box-shadow:var(--glow-blue)}
+    .corner{position:absolute;width:22px;height:22px;border:3px solid rgba(6,182,212,0.65);border-right:none;border-bottom:none;border-radius:6px 0 0 0}
+    .corner.tr{right:14px;top:14px;transform:rotate(90deg)}
+    .corner.bl{left:14px;bottom:14px;transform:rotate(-90deg)}
+    .corner.br{right:14px;bottom:14px;transform:rotate(180deg)}
+    .corner.tl{left:14px;top:14px}
+    .scanline{position:absolute;left:0;right:0;height:3px;background:linear-gradient(90deg, transparent, rgba(6,182,212,0.95), transparent);box-shadow:var(--glow-cyan);opacity:0}
+    .frame.scanning .scanline{opacity:1;animation:scan 1.5s ease-in-out forwards}
+    @keyframes scan{0%{top:10%}100%{top:90%}}
+    .qr-art{width:70%;max-width:260px;opacity:.95}
+    .sim-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+    .kv{display:grid;grid-template-columns:140px 1fr;gap:10px 14px;margin-top:10px}
+    .kv div{padding:8px 10px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03)}
+    .k{color:var(--text-secondary)}
+    .scan-log{margin-top:14px;display:grid;gap:8px}
+    .log-item{padding:10px 12px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);transition:all .3s ease;animation:slideDown .28s ease both}
+    @keyframes slideDown{from{opacity:0; transform:translateY(-10px)} to{opacity:1; transform:translateY(0)}}
+
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:14px 0}
+    .search{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:14px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.04);min-width:min(420px, 100%)}
+    .search input{width:100%;border:0;outline:none;background:transparent;color:var(--text-primary)}
+    .filter-row{display:flex;gap:10px;flex-wrap:wrap}
+    .table-shell{overflow:auto;border-radius:16px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.03)}
+    .w-table{min-width:1040px;width:100%;border-collapse:separate;border-spacing:0}
+    .w-table th,.w-table td{padding:12px 12px;border-bottom:1px solid rgba(255,255,255,0.08);vertical-align:middle}
+    .w-table th{position:sticky;top:0;background:rgba(10,14,26,0.65);backdrop-filter:blur(14px);z-index:2;text-align:left}
+    .row-critical td{background:rgba(239,68,68,0.08)}
+    .row-critical td:first-child{border-left:3px solid var(--accent-red)}
+    .row-warning td:first-child{border-left:3px solid var(--accent-orange)}
+    .row-excess td:first-child{border-left:3px solid var(--accent-blue)}
+    .row-ok td:first-child{border-left:3px solid rgba(16,185,129,0.7)}
+    .status-pill{display:inline-flex;align-items:center;justify-content:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);white-space:nowrap}
+    .status-critical{border-color:rgba(239,68,68,0.35)}
+    .status-warning{border-color:rgba(245,158,11,0.35)}
+    .status-ok{border-color:rgba(16,185,129,0.35)}
+    .status-excess{border-color:rgba(37,99,235,0.35)}
+    .trend{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+    .trend.up{color:rgba(16,185,129,0.95)}
+    .trend.down{color:rgba(239,68,68,0.95)}
+    .trend.flat{color:rgba(148,163,184,0.95)}
+    .qty-flash{animation:qtyFlash .6s ease}
+    @keyframes qtyFlash{0%{background:rgba(6,182,212,0.22)} 100%{background:transparent}}
+    .qty-edit{display:flex; align-items:center; gap:8px}
+    .qty-edit input{width:88px;padding:8px 10px;border-radius:12px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.04);outline:none}
+    .modal{position:fixed;inset:0;display:none;place-items:center;z-index:2000;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px)}
+    .modal.open{display:grid}
+    .modal-card{width:min(560px, calc(100% - 40px));padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,0.12);background:rgba(20,28,46,0.65);backdrop-filter:blur(14px);box-shadow:0 28px 80px rgba(0,0,0,0.5)}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .field{display:grid;gap:6px}
+    .field label{color:var(--text-secondary);font-size:13px}
+    .field input,.field select{padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.04);outline:none}
+    .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:14px;flex-wrap:wrap}
+    .map-wrap{display:grid; grid-template-columns:1.3fr .7fr; gap:14px}
+    .map{display:grid; grid-template-columns:repeat(6, 1fr); gap:8px}
+    .cell{padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.03);min-height:54px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all .3s ease;text-align:center}
+    .cell:hover{transform:translateY(-2px); box-shadow:var(--glow-cyan)}
+    .cell.free{color:rgba(148,163,184,0.9)}
+    .cell.ok{border-color:rgba(16,185,129,0.28); background:rgba(16,185,129,0.08)}
+    .cell.warn{border-color:rgba(245,158,11,0.28); background:rgba(245,158,11,0.08)}
+    .cell.crit{border-color:rgba(239,68,68,0.30); background:rgba(239,68,68,0.08)}
+    .cell.excess{border-color:rgba(37,99,235,0.28); background:rgba(37,99,235,0.08)}
+    .legend{display:grid; gap:8px}
+    .legend .item{display:flex; align-items:center; gap:10px}
+    .swatch{width:14px;height:14px;border-radius:4px;border:1px solid rgba(255,255,255,0.12)}
+    .sw-ok{background:rgba(16,185,129,0.45)}
+    .sw-warn{background:rgba(245,158,11,0.45)}
+    .sw-crit{background:rgba(239,68,68,0.45)}
+    .sw-exc{background:rgba(37,99,235,0.45)}
+    .sw-free{background:rgba(148,163,184,0.25)}
+    .toasts{position:fixed; right:18px; bottom:18px; display:grid; gap:10px; z-index:2500}
+    .toast{width:min(360px, calc(100vw - 36px)); padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,0.12); background:rgba(20,28,46,0.78); backdrop-filter:blur(16px); box-shadow:0 28px 70px rgba(0,0,0,0.45); animation:toastIn .22s ease both; display:flex; gap:10px; align-items:flex-start}
+    @keyframes toastIn{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)}}
+    .toast .dot{margin-top:4px; width:10px; height:10px; border-radius:999px; background:rgba(6,182,212,0.9); box-shadow:var(--glow-cyan)}
+    .toast.success .dot{background:rgba(16,185,129,0.95); box-shadow:var(--glow-green)}
+    .toast.warn .dot{background:rgba(245,158,11,0.95)}
+    .toast.error .dot{background:rgba(239,68,68,0.95)}
+    .toast .msg{color:rgba(241,245,249,0.92); line-height:1.4}
+
+    /* ANALYTICS */
+    .kpi-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:14px}
+    .kpi{padding:18px; transition:all .3s ease}
+    .kpi:hover{transform:translateY(-4px); box-shadow:var(--glow-blue)}
+    .kpi .top{display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .kpi .ico{font-size:22px}
+    .kpi .num{font-family:Orbitron; font-weight:900; font-size:30px}
+    .spark{margin-top:10px; width:100%; height:30px; border-radius:10px; border:1px solid rgba(255,255,255,0.10); background:rgba(255,255,255,0.03)}
+    .agent{padding:18px}
+    .agent-head{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    .tabs{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .tab{padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.05); cursor:pointer; transition:all .3s ease}
+    .tab:hover{transform:translateY(-2px); box-shadow:var(--glow-cyan)}
+    .tab.active{border-color:rgba(6,182,212,0.35); box-shadow:var(--glow-cyan)}
+    .feed{display:grid; gap:10px; max-height:420px; overflow:auto; padding-right:6px}
+    .event{padding:10px 12px; border-radius:14px; border:1px solid rgba(255,255,255,0.10); background:rgba(255,255,255,0.03); animation:slideDown .28s ease both}
+    .event .time{color:var(--text-secondary); font-size:12px}
+    .event .text{margin-top:6px; line-height:1.5}
+    .agent-actions{margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .loader-dots{display:none; gap:6px; align-items:center}
+    .loader-dots.show{display:inline-flex}
+    .loader-dots span{width:6px;height:6px;border-radius:999px;background:rgba(6,182,212,0.9);animation:dot 1s ease-in-out infinite}
+    .loader-dots span:nth-child(2){animation-delay:.12s}
+    .loader-dots span:nth-child(3){animation-delay:.24s}
+    @keyframes dot{0%,100%{transform:translateY(0); opacity:.6} 50%{transform:translateY(-4px); opacity:1}}
+    .analysis-box{margin-top:12px; padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,0.10); background:rgba(255,255,255,0.03); min-height:88px}
+    .forecast-table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:16px; border:1px solid rgba(255,255,255,0.10); background:rgba(255,255,255,0.03)}
+    .forecast-table th,.forecast-table td{padding:12px 12px; border-bottom:1px solid rgba(255,255,255,0.08)}
+    .forecast-table th{text-align:left; background:rgba(255,255,255,0.03)}
+    .forecast-table tr:last-child td{border-bottom:none}
+    .prio-high{background:rgba(239,68,68,0.08)}
+    .prio-med{background:rgba(245,158,11,0.08)}
+    .prio-low{background:rgba(16,185,129,0.07)}
+    .charts{display:grid; gap:14px}
+    .chart-card{padding:16px}
+    .chart-head{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap}
+    .chart-actions{display:flex; gap:10px; flex-wrap:wrap}
+    canvas.chart{width:100%; height:300px; margin-top:12px; border-radius:16px; border:1px solid rgba(255,255,255,0.10); background:rgba(255,255,255,0.02)}
+    .donut-grid{display:grid; grid-template-columns:1fr 0.9fr; gap:14px; align-items:center}
+    .donut-grid canvas{width:300px; height:300px; margin:0 auto}
+    .legend-list{display:grid; gap:10px}
+    .legend-row{display:flex; gap:10px; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:14px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.03)}
+    .legend-row .l{display:flex; gap:10px; align-items:center}
+    .legend-dot{width:12px;height:12px;border-radius:4px}
+    .tip{position:fixed;pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .12s ease, transform .12s ease;z-index:3000;padding:10px 12px;border-radius:14px;border:1px solid rgba(255,255,255,0.12);background:rgba(20,28,46,0.88);backdrop-filter:blur(14px);box-shadow:0 28px 70px rgba(0,0,0,0.45);color:rgba(241,245,249,0.92);max-width:260px;line-height:1.35;font-size:13px}
+    .tip.show{opacity:1;transform:translateY(0)}
+
+    /* CONTACT (music) */
+    .author{width:min(820px, 100%); margin:0 auto; padding:22px; text-align:center}
+    .avatar{width:90px;height:90px;border-radius:999px;margin:0 auto 12px;display:grid;place-items:center;border:1px solid rgba(255,255,255,0.14);background:linear-gradient(135deg, rgba(6,182,212,0.22), rgba(37,99,235,0.18));box-shadow:var(--glow-cyan)}
+    .avatar span{font-family:Orbitron;font-weight:900;font-size:30px}
+    .tag-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);transition:all .3s ease}
+    .pill:hover{box-shadow:var(--glow-cyan); transform:translateY(-2px)}
+    .ai-badge{display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid rgba(6,182,212,0.30);background:rgba(6,182,212,0.08);color:rgba(241,245,249,0.92);font-size:13px}
+    .music-player{padding:16px}
+    .track{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .track .meta .name{font-weight:700}
+    .track .meta .sub{color:var(--text-secondary);margin-top:4px;font-size:13px}
+    .player-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;margin-top:14px}
+    .progress{width:100%;height:12px;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);overflow:hidden;cursor:pointer;transition:all .3s ease}
+    .progress:hover{box-shadow:var(--glow-cyan)}
+    .progress > span{display:block;height:100%;width:0%;background:linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));box-shadow:var(--glow-cyan)}
+    .vol{display:flex;align-items:center;gap:10px;min-width:220px}
+    .vol input[type="range"]{width:140px}
+    .time{display:flex;justify-content:space-between;color:var(--text-secondary);font-size:12px;margin-top:6px}
+    .viz{display:flex;gap:6px;align-items:flex-end;justify-content:center;height:46px;margin-top:14px}
+    .bar{width:8px;height:18px;border-radius:6px;background:rgba(6,182,212,0.35);border:1px solid rgba(255,255,255,0.10);animation:viz 1.2s ease-in-out infinite;transform-origin:bottom}
+    @keyframes viz{0%,100%{transform:scaleY(.35);opacity:.65}50%{transform:scaleY(1.1);opacity:1}}
+    .bar:nth-child(odd){animation-delay:.08s}
+    .bar:nth-child(3n){animation-delay:.16s}
+    .bar:nth-child(5n){animation-delay:.24s}
+    .mini-player{position:fixed;right:18px;bottom:86px;width:320px;z-index:2400;display:none}
+    .mini-player.show{display:block}
+    .mini-inner{padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,0.12);background:rgba(20,28,46,0.78);backdrop-filter:blur(16px);box-shadow:0 28px 70px rgba(0,0,0,0.45)}
+    .mini-toggle{position:fixed;right:18px;bottom:18px;z-index:2450}
+    .stats{display:grid; grid-template-columns:repeat(4, 1fr); gap:14px}
+    .stat{padding:18px; transition:all .3s ease}
+    .stat:hover{transform:translateY(-4px); box-shadow:var(--glow-blue)}
+    .stat .num{font-family:Orbitron; font-weight:900; font-size:28px}
+    .stat .cap{margin-top:8px; color:var(--text-secondary)}
+
+    /* Responsive */
+    @media (max-width:1024px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid-4x2{grid-template-columns:repeat(2, 1fr)}
+      .adv-grid{grid-template-columns:1fr}
+      .cards-3{grid-template-columns:1fr}
+      .kpi-grid{grid-template-columns:repeat(2, 1fr)}
+      .arch{grid-template-columns:1fr; gap:10px}
+      .sim-grid{grid-template-columns:1fr}
+      .map-wrap{grid-template-columns:1fr}
+      .stats{grid-template-columns:repeat(2, 1fr)}
+    }
+    @media (max-width:768px){
+      .nav{display:none}
+      .burger{display:flex}
+      .footer-inner{grid-template-columns:1fr}
+      .footer-right{align-items:flex-start}
+      .counter-grid{grid-template-columns:1fr}
+      .gallery{grid-template-columns:1fr}
+      .donut-grid{grid-template-columns:1fr}
+      .donut-grid canvas{width:100%; height:300px}
+    }
+    @media (max-width:480px){
+      .container{width:calc(100% - 28px)}
+      .kv{grid-template-columns:1fr}
+      .vol{min-width:unset}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" data-header>
+    <div class="container">
+      <div class="header-inner">
+        <a class="logo" href="#home" aria-label="WarehouseAI">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 4h7v7H4V4Z" stroke="rgba(6,182,212,.9)" stroke-width="1.6"/>
+            <path d="M13 4h7v7h-7V4Z" stroke="rgba(241,245,249,.75)" stroke-width="1.2"/>
+            <path d="M4 13h7v7H4v-7Z" stroke="rgba(241,245,249,.75)" stroke-width="1.2"/>
+            <path d="M13 13h2v2h-2v-2Z" fill="rgba(6,182,212,.9)"/>
+            <path d="M16 13h4v4h-4v-4Z" stroke="rgba(6,182,212,.6)" stroke-width="1.2"/>
+            <path d="M13 16h3v4h-3v-4Z" stroke="rgba(241,245,249,.6)" stroke-width="1.2"/>
+          </svg>
+          <div class="brand logo-font">Warehouse<span class="cyan">AI</span></div>
+        </a>
+        <nav class="nav" aria-label="Навигация">
+          <a href="#home" data-link="home">Home</a>
+          <a href="#about" data-link="about">О проекте</a>
+          <a href="#system" data-link="system">Система</a>
+          <a href="#analytics" data-link="analytics">Аналитика</a>
+          <a href="#contact" data-link="contact">Контакты</a>
+        </nav>
+        <button class="burger" type="button" aria-label="Меню" data-burger>
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav class="mobile-nav" data-mobile-nav aria-label="Мобильная навигация">
+        <a href="#home" data-link="home">Home</a>
+        <a href="#about" data-link="about">О проекте</a>
+        <a href="#system" data-link="system">Система</a>
+        <a href="#analytics" data-link="analytics">Аналитика</a>
+        <a href="#contact" data-link="contact">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page bg-grid">
+    <!-- HOME -->
+    <div class="view active" id="home" data-view="home">
+      <section class="hero" aria-label="Hero">
+        <div class="particles" data-particles aria-hidden="true"></div>
+        <div class="container">
+          <div class="hero-grid">
+            <div>
+              <h1 class="gradient-text">СИСТЕМА УПРАВЛЕНИЯ<br>СКЛАДСКИМИ ЗАПАСАМИ</h1>
+              <p class="sub">Искусственный интеллект + QR-коды = точный учёт в реальном времени</p>
+
+              <div class="status-row">
+                <div class="badge online"><span class="dot" aria-hidden="true"></span>🟢 Система онлайн</div>
+                <div class="badge"><span class="dot" aria-hidden="true" style="background:rgba(37,99,235,.9); box-shadow:var(--glow-blue)"></span>📦 <span class="mono" data-db-count>247</span> товаров</div>
+                <div class="badge"><span class="dot" aria-hidden="true" style="background:rgba(245,158,11,.95); box-shadow:0 0 20px rgba(245,158,11,.3)"></span>⚡ ИИ‑модуль активен</div>
+              </div>
+
+              <div class="counter-grid">
+                <div class="metric">
+                  <div class="value" data-counter data-target="98.7">0</div>
+                  <div class="label">точность учёта</div>
+                </div>
+                <div class="metric">
+                  <div class="value mono" data-counter data-target="247">0</div>
+                  <div class="label">товаров в базе</div>
+                </div>
+                <div class="metric">
+                  <div class="value" data-counter data-target="3" data-suffix="x">0</div>
+                  <div class="label">ускорение обработки</div>
+                </div>
+              </div>
+
+              <div class="cta-row">
+                <a class="btn primary" href="#about">Узнать больше →</a>
+                <a class="btn" href="#system">Смотреть систему ▶</a>
+              </div>
+            </div>
+
+            <div class="glass card">
+              <div class="muted" style="font-weight:600">Коротко о гипотезе</div>
+              <p style="margin:12px 0 0; line-height:1.65; color:rgba(241,245,249,0.92)">
+                Если внедрить систему управления складскими запасами с использованием искусственного интеллекта и автоматизированного сбора данных (QR‑коды),
+                то это повысит точность учёта, снизит дефицит и излишки, и улучшит прогнозирование сроков пополнения.
+              </p>
+              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px">
+                <div class="badge"><span class="mono">Realtime</span></div>
+                <div class="badge"><span class="mono">QR</span> scanning</div>
+                <div class="badge"><span class="mono">AI</span> analytics</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section">
+        <div class="container">
+          <div class="gradient-border">
+            <div class="glass card">
+              <div class="quote-wrap">
+                <div class="quote-mark" aria-hidden="true">“</div>
+                <p class="quote-text">
+                  Если внедрить систему управления складскими запасами
+                  с использованием искусственного интеллекта и автоматизированного сбора данных
+                  (QR-коды), то это позволит повысить точность учёта товаров, снизить вероятность
+                  дефицита и излишков, а также обеспечить более эффективное прогнозирование
+                  срока пополнения запасов.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap">
+            <div>
+              <div class="muted" style="font-weight:600">Что делаем</div>
+              <h2 style="margin:10px 0 0; font-family:Orbitron; letter-spacing:.4px">8 целей проекта</h2>
+            </div>
+            <div class="muted">Появляются по одной при скролле</div>
+          </div>
+          <div class="grid-4x2" style="margin-top:16px">
+            <div class="glass goal reveal"><div class="n">№1 🔍</div><div class="t">Анализ существующих методов управления запасами и их недостатков</div></div>
+            <div class="glass goal reveal"><div class="n">№2 🤖</div><div class="t">Изучение современных подходов ИИ в логистике</div></div>
+            <div class="glass goal reveal"><div class="n">№3 🏗️</div><div class="t">Разработка архитектуры веб‑сайта и структуры системы</div></div>
+            <div class="glass goal reveal"><div class="n">№4 📷</div><div class="t">Реализация механизма регистрации товаров через QR‑коды</div></div>
+            <div class="glass goal reveal"><div class="n">№5 🗄️</div><div class="t">Создание динамической базы данных для хранения товаров</div></div>
+            <div class="glass goal reveal"><div class="n">№6 📊</div><div class="t">Разработка алгоритма анализа данных и прогнозирования запасов</div></div>
+            <div class="glass goal reveal"><div class="n">№7 💬</div><div class="t">Внедрение AI‑компонентов: аналитический модуль</div></div>
+            <div class="glass goal reveal"><div class="n">№8 ✅</div><div class="t">Тестирование системы и оценка её эффективности</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="adv-grid">
+            <div class="glass adv reveal">
+              <div class="big gradient-text">+43%</div>
+              <div style="font-weight:700; margin-top:6px">Точность учёта</div>
+              <div class="cap">Снижение ошибок за счёт QR‑идентификации.</div>
+            </div>
+            <div class="glass adv reveal">
+              <div class="big gradient-text">в 3×</div>
+              <div style="font-weight:700; margin-top:6px">Быстрее обработка</div>
+              <div class="cap">Автоматизация сканирования и обновления остатков.</div>
+            </div>
+            <div class="glass adv reveal">
+              <div class="big gradient-text">−28%</div>
+              <div style="font-weight:700; margin-top:6px">Снижение издержек</div>
+              <div class="cap">Прогноз пополнения уменьшает излишки и дефицит.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <h2 style="margin:0 0 14px; font-family:Orbitron; letter-spacing:.4px">Демонстрация системы</h2>
+          <div class="video-wrapper" data-video-wrapper>
+            <video controls style="width:100%; height:100%; border-radius:12px;">
+              <source src="YOUR_VIDEO_FILE.mp4" type="video/mp4">
+            </video>
+            <div class="video-placeholder">
+              <div class="play-icon">▶</div>
+              <p style="margin:0" class="muted">Видео‑презентация системы WarehouseAI</p>
+            </div>
+          </div>
+          <p class="muted" style="margin:10px 0 0">Подсказка: замените `YOUR_VIDEO_FILE.mp4` на ваш файл (или вставьте `iframe`).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="view" id="about" data-view="about">
+      <div class="section">
+        <div class="container">
+          <div class="muted" style="font-weight:600">Контекст и обоснование</div>
+          <h2 class="gradient-text">О проекте WarehouseAI</h2>
+          <p class="muted" style="margin:12px 0 0; max-width:900px; line-height:1.7">
+            Аналитический текст + галерея + таймлайн методологии + интерактивная таблица сравнения методов.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="cards-3">
+            <article class="glass card reveal">
+              <h3>📌 Проблема ручного учёта</h3>
+              <p>Традиционные методы управления складскими запасами основаны на ручном вводе данных, что приводит к систематическим ошибкам, потере товаров, дефициту или излишкам. По данным отраслевых исследований, ошибки инвентаризации могут составлять до 3.5% от стоимости запасов: это отражается на сроках поставок, качестве сервиса и финансовых показателях. Чем больше номенклатура и выше оборот, тем сложнее поддерживать актуальные остатки и контролировать пороги пополнения без автоматизации.</p>
+            </article>
+            <article class="glass card reveal">
+              <h3>📌 ИИ в современной логистике</h3>
+              <p>Применение алгоритмов машинного обучения позволяет анализировать исторические данные о расходе товаров и строить точные прогнозы потребности в пополнении запасов. ИИ выявляет аномалии (неожиданно высокий расход, сезонность, пики спроса), ранжирует позиции по риску дефицита и формирует рекомендации по заказам. В результате компания получает более устойчивую цепочку поставок и снижает расходы на хранение, избегая закупки “лишних” объёмов.</p>
+            </article>
+            <article class="glass card reveal">
+              <h3>📌 QR‑коды как инструмент автоматизации</h3>
+              <p>Технология QR‑кодирования обеспечивает мгновенную идентификацию товаров без ошибок ручного ввода. Каждый товар получает уникальный QR‑код, содержащий SKU, название, локацию и дополнительные атрибуты. Сканирование занимает секунды и сразу обновляет учётные данные. Это ускоряет приёмку, перемещения и инвентаризацию, а также повышает прозрачность процессов: каждая операция фиксируется в журнале, что упрощает аудит и контроль качества.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="gallery">
+            <figure class="gallery-item reveal">
+              <img alt="Современный автоматизированный склад" src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80">
+              <div class="gallery-overlay" aria-hidden="true"></div>
+              <figcaption class="gallery-caption">Современный автоматизированный склад | AI‑генерация</figcaption>
+            </figure>
+            <figure class="gallery-item reveal">
+              <img alt="Сканирование QR-кода на складе" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80">
+              <div class="gallery-overlay" aria-hidden="true"></div>
+              <figcaption class="gallery-caption">Сканирование QR‑кода на складе | AI‑генерация</figcaption>
+            </figure>
+            <figure class="gallery-item reveal">
+              <img alt="Аналитический дашборд системы" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80">
+              <div class="gallery-overlay" aria-hidden="true"></div>
+              <figcaption class="gallery-caption">Аналитический дашборд системы | AI‑генерация</figcaption>
+            </figure>
+            <figure class="gallery-item reveal">
+              <img alt="Нейросетевой модуль прогнозирования" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80">
+              <div class="gallery-overlay" aria-hidden="true"></div>
+              <figcaption class="gallery-caption">Нейросетевой модуль прогнозирования | AI‑генерация</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="timeline">
+            <div class="glass tl-item reveal">
+              <div class="chip blue">① Анализ (синий)</div>
+              <div class="muted" style="margin-top:8px; line-height:1.6">Изучение существующих методов управления запасами, выявление ключевых проблем и недостатков.</div>
+            </div>
+            <div class="glass tl-item reveal">
+              <div class="chip cyan">② Проектирование (циановый)</div>
+              <div class="muted" style="margin-top:8px; line-height:1.6">Разработка архитектуры системы, структуры базы данных, алгоритмов прогнозирования и UX‑прототипа.</div>
+            </div>
+            <div class="glass tl-item reveal">
+              <div class="chip green">③ Разработка (зелёный)</div>
+              <div class="muted" style="margin-top:8px; line-height:1.6">Реализация QR‑модуля, динамической базы данных, AI‑аналитического компонента и веб‑интерфейса.</div>
+            </div>
+            <div class="glass tl-item reveal">
+              <div class="chip orange">④ Тестирование (оранжевый)</div>
+              <div class="muted" style="margin-top:8px; line-height:1.6">Проверка точности прогнозов, нагрузочное тестирование, оценка эффективности системы.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap">
+            <div>
+              <div class="muted" style="font-weight:600">Сравнение подходов</div>
+              <h2 style="margin-top:10px">Таблица методов (сортировка)</h2>
+            </div>
+          </div>
+          <div class="table-tools">
+            <button class="btn small" type="button" data-sort="accuracy">По точности ↕</button>
+            <button class="btn small" type="button" data-sort="speed">По скорости ↕</button>
+            <button class="btn small" type="button" data-sort="cost">По стоимости ↕</button>
+            <button class="btn small" type="button" data-reset>Сбросить</button>
+          </div>
+          <div class="glass" style="padding:0">
+            <table class="table" aria-label="Таблица методов">
+              <thead>
+                <tr>
+                  <th>Метод</th>
+                  <th>Точность (%)</th>
+                  <th>Скорость (%)</th>
+                  <th>Стоимость (у.е.)</th>
+                  <th>ИИ</th>
+                  <th>Рейтинг ★</th>
+                </tr>
+              </thead>
+              <tbody data-methods-body></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SYSTEM -->
+    <div class="view" id="system" data-view="system">
+      <div class="section">
+        <div class="container">
+          <div class="muted" style="font-weight:600">Интерактивная демонстрация</div>
+          <h2 class="gradient-text">Система WarehouseAI</h2>
+          <p class="muted" style="margin:12px 0 0; max-width:920px; line-height:1.7">
+            QR‑симулятор, редактируемая таблица остатков, добавление товара, экспорт CSV и мини‑карта склада.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="glass card reveal">
+            <div class="arch">
+              <div class="glass arch-node">
+                <div class="ico">📷</div><div class="name">QR‑Сканер</div><div class="small">Захват кода и валидация.</div>
+                <div class="tooltip">Симулирует считывание QR и формирует событие сканирования для журнала.</div>
+              </div>
+              <div class="glass arch-node">
+                <div class="ico">⚙️</div><div class="name">Обработчик</div><div class="small">Правила и статусы.</div>
+                <div class="tooltip">Применяет пороги min, считает дни до дефицита, готовит данные для UI.</div>
+              </div>
+              <div class="glass arch-node">
+                <div class="ico">🗄️</div><div class="name">База данных</div><div class="small">JS‑массив в памяти.</div>
+                <div class="tooltip">Добавление, правка, авто‑обновление остатков.</div>
+              </div>
+              <div class="glass arch-node">
+                <div class="ico">🤖</div><div class="name">ИИ‑модуль</div><div class="small">Прогноз и советы.</div>
+                <div class="tooltip">Имитация аналитики: приоритеты пополнения, события.</div>
+              </div>
+              <div class="glass arch-node">
+                <div class="ico">📊</div><div class="name">Дашборд</div><div class="small">Таблица + карта.</div>
+                <div class="tooltip">Визуализирует статусы и позволяет менять qty.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="sim-grid">
+            <div class="glass card reveal">
+              <div class="muted" style="font-weight:700">QR‑считыватель</div>
+              <div class="frame" data-frame>
+                <div class="corner tl" aria-hidden="true"></div><div class="corner tr" aria-hidden="true"></div>
+                <div class="corner bl" aria-hidden="true"></div><div class="corner br" aria-hidden="true"></div>
+                <div class="scanline" aria-hidden="true"></div>
+                <svg class="qr-art" viewBox="0 0 120 120" aria-hidden="true">
+                  <rect x="0" y="0" width="120" height="120" rx="14" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+                  <g fill="rgba(6,182,212,0.7)">
+                    <rect x="16" y="16" width="22" height="22" rx="4"/><rect x="82" y="16" width="22" height="22" rx="4"/><rect x="16" y="82" width="22" height="22" rx="4"/>
+                  </g>
+                  <g fill="rgba(241,245,249,0.70)">
+                    <rect x="48" y="18" width="6" height="6"/><rect x="58" y="18" width="6" height="6"/><rect x="68" y="18" width="6" height="6"/>
+                    <rect x="48" y="30" width="6" height="6"/><rect x="62" y="30" width="6" height="6"/><rect x="72" y="30" width="6" height="6"/>
+                    <rect x="48" y="44" width="6" height="6"/><rect x="58" y="44" width="6" height="6"/><rect x="70" y="44" width="6" height="6"/>
+                    <rect x="48" y="58" width="6" height="6"/><rect x="60" y="58" width="6" height="6"/><rect x="72" y="58" width="6" height="6"/>
+                    <rect x="48" y="72" width="6" height="6"/><rect x="58" y="72" width="6" height="6"/><rect x="68" y="72" width="6" height="6"/>
+                    <rect x="48" y="86" width="6" height="6"/><rect x="62" y="86" width="6" height="6"/><rect x="72" y="86" width="6" height="6"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="sim-actions">
+                <button class="btn primary" type="button" data-scan>📷 Сканировать товар</button>
+                <button class="btn" type="button" data-scan-rand>✨ Случайный “приход”</button>
+              </div>
+            </div>
+
+            <div class="glass card reveal">
+              <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap">
+                <div>
+                  <div class="muted" style="font-weight:700">Результат сканирования</div>
+                  <div class="muted" style="margin-top:6px">Время: <span class="mono" data-last-time>—</span></div>
+                </div>
+                <button class="btn small danger" type="button" data-clear-log>Очистить журнал</button>
+              </div>
+
+              <div class="kv">
+                <div class="k">SKU</div><div class="mono" data-sku>—</div>
+                <div class="k">Название</div><div data-name>—</div>
+                <div class="k">Количество</div><div class="mono" data-qty>—</div>
+                <div class="k">Мин. порог</div><div class="mono" data-min>—</div>
+                <div class="k">Локация</div><div class="mono" data-loc>—</div>
+                <div class="k">Статус</div><div data-status>—</div>
+              </div>
+
+              <div class="muted" style="margin-top:14px; font-weight:700">Журнал сканирований (последние 5)</div>
+              <div class="scan-log" data-log></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="toolbar">
+            <div class="search" role="search">
+              <span class="muted">🔍</span>
+              <input type="text" placeholder="Поиск по названию..." data-search />
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end">
+              <button class="btn small" type="button" data-export>📊 Экспорт CSV</button>
+              <button class="btn small primary" type="button" data-add>+ Добавить товар</button>
+            </div>
+          </div>
+          <div class="filter-row" style="margin-bottom:12px">
+            <button class="btn small" type="button" data-filter="all">Все</button>
+            <button class="btn small" type="button" data-filter="critical">🔴 Дефицит</button>
+            <button class="btn small" type="button" data-filter="warning">🟡 Внимание</button>
+            <button class="btn small" type="button" data-filter="ok">🟢 Норма</button>
+            <button class="btn small" type="button" data-filter="excess">🔵 Излишек</button>
+            <div class="badge"><span class="mono" data-live-count>—</span> строк</div>
+          </div>
+
+          <div class="table-shell glass reveal">
+            <table class="w-table" aria-label="Таблица склада">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>SKU</th>
+                  <th>Название</th>
+                  <th>Кол‑во</th>
+                  <th>Мин.порог</th>
+                  <th>Статус</th>
+                  <th>Дней до дефицита</th>
+                  <th>Тренд</th>
+                  <th>Правка</th>
+                </tr>
+              </thead>
+              <tbody data-warehouse-body></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap">
+            <h2 style="margin:0; font-family:Orbitron; letter-spacing:.4px">Мини‑карта склада (5×6)</h2>
+            <button class="btn small" type="button" data-refresh-map>🔄 Обновить карту</button>
+          </div>
+          <div class="map-wrap" style="margin-top:16px">
+            <div class="glass card reveal">
+              <div class="map" data-map></div>
+              <p class="muted" style="margin:10px 0 0">Клик по ячейке показывает данные товара (toast).</p>
+            </div>
+            <div class="glass card reveal">
+              <div class="muted" style="font-weight:700">Легенда</div>
+              <div class="legend" style="margin-top:12px">
+                <div class="item"><span class="swatch sw-ok"></span> 🟢 Норма</div>
+                <div class="item"><span class="swatch sw-warn"></span> 🟡 Внимание</div>
+                <div class="item"><span class="swatch sw-crit"></span> 🔴 Дефицит</div>
+                <div class="item"><span class="swatch sw-exc"></span> 🔵 Излишек</div>
+                <div class="item"><span class="swatch sw-free"></span> ⬜ Свободно</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS -->
+    <div class="view" id="analytics" data-view="analytics">
+      <div class="section">
+        <div class="container">
+          <div class="muted" style="font-weight:600">Метрики, новости и графики</div>
+          <h2 class="gradient-text">Аналитика склада</h2>
+          <p class="muted" style="margin:12px 0 0; max-width:950px; line-height:1.7">
+            KPI + AI‑агент с обновляемыми новостями (10×6) + 3 интерактивных графика Canvas.
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="kpi-grid">
+            <div class="glass kpi reveal">
+              <div class="top"><div class="muted">Всего товаров</div><div class="ico">📦</div></div>
+              <div class="num mono" data-kpi-total>0</div>
+              <canvas class="spark" width="200" height="60" data-spark></canvas>
+            </div>
+            <div class="glass kpi reveal">
+              <div class="top"><div class="muted">Точность учёта</div><div class="ico">🎯</div></div>
+              <div class="num" data-kpi-acc>0%</div>
+              <canvas class="spark" width="200" height="60" data-spark></canvas>
+            </div>
+            <div class="glass kpi reveal">
+              <div class="top"><div class="muted">В дефиците / внимании</div><div class="ico" data-warn-ico>⚠️</div></div>
+              <div class="num mono" data-kpi-attn>0</div>
+              <canvas class="spark" width="200" height="60" data-spark></canvas>
+            </div>
+            <div class="glass kpi reveal">
+              <div class="top"><div class="muted">Среднее количество</div><div class="ico">📊</div></div>
+              <div class="num mono" data-kpi-avg>0</div>
+              <canvas class="spark" width="200" height="60" data-spark></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="glass agent reveal">
+            <div class="agent-head">
+              <div class="muted" style="font-weight:700">🤖 AI‑Аналитик склада</div>
+              <div class="badge"><span class="mono">● Онлайн</span></div>
+            </div>
+            <div class="tabs" role="tablist" aria-label="Табы">
+              <button class="tab active" type="button" data-tab="feed">📡 Лента событий</button>
+              <button class="tab" type="button" data-tab="forecast">📊 Прогноз</button>
+              <button class="tab" type="button" data-tab="recs">💡 Рекомендации</button>
+            </div>
+
+            <div style="margin-top:14px">
+              <div data-panel="feed">
+                <div class="feed" data-feed></div>
+                <div class="agent-actions">
+                  <button class="btn small" type="button" data-refresh-feed>🔄 Обновить 6 новостей</button>
+                  <button class="btn small primary" type="button" data-generate>🔄 Сгенерировать анализ</button>
+                  <div class="loader-dots" data-loader role="status" aria-label="Загрузка"><span></span><span></span><span></span></div>
+                </div>
+                <div class="analysis-box" data-analysis>
+                  <div class="muted">Нажмите “Сгенерировать анализ”.</div>
+                </div>
+              </div>
+
+              <div data-panel="forecast" style="display:none">
+                <div class="muted" style="margin-bottom:10px">Сортировка по “дней до дефицита”.</div>
+                <div style="overflow:auto">
+                  <table class="forecast-table" aria-label="Прогноз">
+                    <thead>
+                      <tr><th>Товар</th><th>Остаток</th><th>Расход/день</th><th>Дней до дефицита</th><th>Приоритет</th></tr>
+                    </thead>
+                    <tbody data-forecast></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div data-panel="recs" style="display:none">
+                <div class="muted" style="margin-bottom:10px">3–5 рекомендаций.</div>
+                <div style="display:grid; gap:10px" data-recs></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="charts">
+            <div class="glass chart-card reveal">
+              <div class="chart-head">
+                <div>
+                  <div class="muted" style="font-weight:700">График 1</div>
+                  <div style="margin-top:6px">Линейный — “Динамика запасов за период”</div>
+                </div>
+                <div class="chart-actions">
+                  <button class="btn small" type="button" data-range="7">7 дней</button>
+                  <button class="btn small" type="button" data-range="30">30 дней</button>
+                  <button class="btn small" type="button" data-range="90">90 дней</button>
+                </div>
+              </div>
+              <canvas class="chart" data-line></canvas>
+            </div>
+
+            <div class="glass chart-card reveal">
+              <div class="chart-head">
+                <div>
+                  <div class="muted" style="font-weight:700">График 2</div>
+                  <div style="margin-top:6px">Donut — “Распределение статусов склада”</div>
+                </div>
+                <div class="badge"><span class="mono" data-ok-pct>—</span> в норме</div>
+              </div>
+              <div class="donut-grid" style="margin-top:12px">
+                <canvas data-donut></canvas>
+                <div class="legend-list" data-donut-legend></div>
+              </div>
+            </div>
+
+            <div class="glass chart-card reveal">
+              <div class="chart-head">
+                <div>
+                  <div class="muted" style="font-weight:700">График 3</div>
+                  <div style="margin-top:6px">Bar Chart — “Топ‑5 по срочности пополнения”</div>
+                </div>
+                <button class="btn small" type="button" data-refresh-bars>🔄 Обновить</button>
+              </div>
+              <canvas class="chart" style="height:280px" data-bars></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="view" id="contact" data-view="contact">
+      <div class="section">
+        <div class="container">
+          <div class="muted" style="font-weight:600">Автор и материалы</div>
+          <h2 class="gradient-text">Контакты</h2>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="glass author reveal">
+            <div class="avatar" aria-hidden="true"><span>ОБ</span></div>
+            <div style="font-family:Orbitron; font-weight:900; font-size:22px; letter-spacing:.4px">Орлов Борис Вячеславович</div>
+            <div class="muted" style="margin-top:8px; line-height:1.7">
+              Дисциплина: Информационно-коммуникационные технологии (ИКТ)<br>
+              Учебное заведение: <span style="opacity:.85">[вставить]</span><br>
+              Образовательная программа: <span style="opacity:.85">[вставить]</span><br>
+              Год: 2025
+            </div>
+            <div class="tag-row">
+              <span class="pill">HTML5</span><span class="pill">CSS3</span><span class="pill">JavaScript</span>
+              <span class="pill">Canvas API</span><span class="pill">QR‑технологии</span><span class="pill">AI‑аналитика</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap">
+            <div>
+              <h2>🎵 Фоновая музыка <span class="ai-badge">Создана нейросетью</span></h2>
+              <div class="muted" style="margin-top:10px">Кастомный плеер + мини‑плеер справа снизу.</div>
+            </div>
+          </div>
+
+          <div class="glass music-player reveal" style="margin-top:16px">
+            <!-- МЕСТО ДЛЯ ВСТАВКИ АУДИО-ФАЙЛА -->
+            <!-- Заменить "YOUR_MUSIC_FILE.mp3" на реальный путь к файлу -->
+            <audio id="bgMusic" src="YOUR_MUSIC_FILE.mp3"></audio>
+
+            <div class="track">
+              <div class="meta">
+                <div class="name">AI Ambient Track 01</div>
+                <div class="sub">Suno AI • WarehouseAI demo</div>
+              </div>
+              <div class="badge"><span class="mono" data-track-state>⏸ Пауза</span></div>
+            </div>
+
+            <div style="margin-top:14px">
+              <div class="progress" data-progress role="progressbar" aria-label="Прогресс" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-bar></span></div>
+              <div class="time mono"><span data-time>0:00</span><span data-dur>0:00</span></div>
+            </div>
+
+            <div class="player-controls">
+              <button class="btn icon small" type="button" data-prev aria-label="Предыдущий">⏮</button>
+              <button class="btn primary icon small" type="button" data-play aria-label="Play/Pause">⏯</button>
+              <button class="btn icon small" type="button" data-next aria-label="Следующий">⏭</button>
+              <div class="vol">
+                <span class="muted">🔊</span>
+                <input type="range" min="0" max="1" step="0.01" value="0.7" data-vol aria-label="Громкость">
+                <span class="mono muted" data-vol-val>70%</span>
+              </div>
+            </div>
+
+            <div class="viz" aria-hidden="true">
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="stats">
+            <div class="glass stat reveal"><div class="num" data-counter data-target="5">0</div><div class="cap">страниц (в одном файле)</div></div>
+            <div class="glass stat reveal"><div class="num mono" data-counter data-target="15">0</div><div class="cap">товаров в БД</div></div>
+            <div class="glass stat reveal"><div class="num" data-counter data-target="3">0</div><div class="cap">графика Canvas</div></div>
+            <div class="glass stat reveal"><div class="num mono" data-counter data-target="40">0</div><div class="cap">AI‑событий (шаблоны)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" data-modal role="dialog" aria-modal="true" aria-label="Добавить товар">
+    <div class="modal-card">
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap">
+        <div>
+          <div class="muted" style="font-weight:700">Добавление товара</div>
+          <div class="muted" style="margin-top:6px">Сохраняется в памяти страницы.</div>
+        </div>
+        <button class="btn small" type="button" data-close>✕</button>
+      </div>
+      <form data-form style="margin-top:14px">
+        <div class="form-grid">
+          <div class="field"><label for="name">Название</label><input id="name" name="name" required placeholder="Например: Сканер Zebra DS2208" /></div>
+          <div class="field"><label for="sku">SKU</label><input id="sku" name="sku" required placeholder="SKU-016" class="mono" /></div>
+          <div class="field"><label for="qty">Количество</label><input id="qty" name="qty" required type="number" min="0" value="0" class="mono" /></div>
+          <div class="field"><label for="min">Мин. порог</label><input id="min" name="min" required type="number" min="0" value="5" class="mono" /></div>
+          <div class="field"><label for="location">Локация</label><input id="location" name="location" required placeholder="A-01" class="mono" /></div>
+          <div class="field">
+            <label for="category">Категория</label>
+            <select id="category" name="category" required>
+              <option value="" disabled selected>Выберите категорию</option>
+              <option>Электроника</option><option>Периферия</option><option>Накопители</option><option>Комплектующие</option>
+              <option>Сеть</option><option>Питание</option><option>Оргтехника</option><option>Расходники</option><option>Аудио</option><option>Прочее</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn" type="button" data-cancel>Отмена</button>
+          <button class="btn primary" type="submit">Добавить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toasts + tip + mini player -->
+  <div class="toasts" data-toasts aria-live="polite" aria-atomic="true"></div>
+  <div class="tip" data-tip></div>
+  <button class="btn mini-toggle" type="button" data-mini-toggle>🎵</button>
+  <div class="mini-player" data-mini>
+    <div class="mini-inner">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px">
+        <div>
+          <div style="font-weight:800">Mini‑плеер</div>
+          <div class="muted" style="margin-top:4px; font-size:13px">AI Ambient Track 01</div>
+        </div>
+        <button class="btn small" type="button" data-mini-close>✕</button>
+      </div>
+      <div style="margin-top:10px; display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap">
+        <button class="btn small primary" type="button" data-mini-play>⏯</button>
+        <div class="badge"><span class="mono" data-mini-time>0:00</span></div>
+        <div class="badge"><span class="mono" data-mini-state>⏸</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner"> 
+        <div class="muted" style="line-height:1.7">
+          <div style="color:rgba(241,245,249,0.92); font-weight:700">Орлов Богдан Владимирович </div>
+          <div>Дисциплина: Информационно-коммуникационные технологии (ИКТ)</div>
+          <div>Учебное заведение / факультет: <span style="opacity:.85">[Narxoz University]</span></div>
+          <div>Образовательная программа: <span style="opacity:.85">[Юриспруденция]</span></div>
+          <div>© 2025</div>
+        </div>
+        <div class="footer-right">
+          <nav class="social" aria-label="Ссылки">
+            <a class="icon-btn" href="#" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M9 19c-4 1.5-4-2.5-5-3m10 6v-3.2c0-.9.3-1.6.8-2-2.7-.3-5.5-1.3-5.5-5.7 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.5.1-3 0 0 1-.3 3.3 1.1a11 11 0 0 1 6 0C18.1 4.6 19 5 19 5c.6 1.5.2 2.7.1 3 .7.8 1.1 1.8 1.1 3 0 4.4-2.8 5.4-5.5 5.7.5.4.9 1.2.9 2.4V22" stroke="rgba(241,245,249,.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a class="icon-btn" href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6.5 8.5V19" stroke="rgba(241,245,249,.85)" stroke-width="1.4" stroke-linecap="round"/>
+                <path d="M6.5 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" fill="rgba(241,245,249,.85)"/>
+                <path d="M10.5 19v-6.2c0-1.9 1-3.1 2.7-3.1 1.6 0 2.3 1.1 2.3 3.1V19" stroke="rgba(241,245,249,.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10.5 10v1.4" stroke="rgba(241,245,249,.85)" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </a>
+          </nav>
+          <button class="btn" type="button" data-top>↑ Наверх</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Shared DB (single source of truth for onepage) =====
+    const warehouseDB = [
+      { sku:"SKU-001", name:"Ноутбук HP ProBook 450",   qty:47,  min:10, location:"A-12", category:"Электроника",  dailyUse:2 },
+      { sku:"SKU-002", name:"Монитор Dell 27\\\"",      qty:23,  min:5,  location:"A-15", category:"Электроника",  dailyUse:1 },
+      { sku:"SKU-003", name:"Клавиатура Logitech MX",   qty:3,   min:8,  location:"B-03", category:"Периферия",    dailyUse:1 },
+      { sku:"SKU-004", name:"Мышь Logitech G502",       qty:67,  min:10, location:"B-04", category:"Периферия",    dailyUse:2 },
+      { sku:"SKU-005", name:"SSD Samsung 1TB",          qty:12,  min:15, location:"C-07", category:"Накопители",   dailyUse:3 },
+      { sku:"SKU-006", name:"Оперативная память 16GB",  qty:89,  min:20, location:"C-09", category:"Комплектующие",dailyUse:4 },
+      { sku:"SKU-007", name:"Сетевой кабель Cat6 (50м)",qty:5,   min:10, location:"D-02", category:"Сеть",         dailyUse:1 },
+      { sku:"SKU-008", name:"Маршрутизатор TP-Link",    qty:18,  min:5,  location:"D-05", category:"Сеть",         dailyUse:1 },
+      { sku:"SKU-009", name:"UPS APC 1000VA",           qty:7,   min:3,  location:"E-01", category:"Питание",      dailyUse:0 },
+      { sku:"SKU-010", name:"Принтер Canon LBP",        qty:11,  min:4,  location:"E-08", category:"Оргтехника",   dailyUse:1 },
+      { sku:"SKU-011", name:"Картридж Canon 051",       qty:2,   min:6,  location:"F-01", category:"Расходники",   dailyUse:2 },
+      { sku:"SKU-012", name:"Веб-камера Logitech C920", qty:34,  min:8,  location:"B-11", category:"Периферия",    dailyUse:1 },
+      { sku:"SKU-013", name:"Наушники Sony WH-1000XM5", qty:9,   min:5,  location:"A-20", category:"Аудио",        dailyUse:1 },
+      { sku:"SKU-014", name:"USB-хаб 7-port",           qty:52,  min:10, location:"B-17", category:"Периферия",    dailyUse:1 },
+      { sku:"SKU-015", name:"Планшет iPad 10th Gen",    qty:4,   min:6,  location:"A-25", category:"Электроника",  dailyUse:0 },
+    ];
+
+    // ===== Helpers =====
+    const rand = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+    const clampQty = (n) => Math.max(0, Math.floor(Number(n) || 0));
+    const nowTime = () => new Date().toLocaleTimeString('ru-RU', { hour12:false });
+    function getStatus(item){
+      if(item.qty <= 0) return { label:"🔴 Дефицит", class:"status-critical", key:"critical" };
+      if(item.qty < item.min) return { label:"🟡 Внимание", class:"status-warning", key:"warning" };
+      if(item.qty > item.min * 5) return { label:"🔵 Излишек", class:"status-excess", key:"excess" };
+      return { label:"🟢 Норма", class:"status-ok", key:"ok" };
+    }
+    function getDaysLeft(item){ return item.dailyUse > 0 ? Math.floor(item.qty / item.dailyUse) : 999; }
+
+    function showToast(message, type="success"){
+      const wrap = document.querySelector('[data-toasts]');
+      if(!wrap) return;
+      const el = document.createElement('div');
+      el.className = `toast ${type}`;
+      el.innerHTML = `<div class="dot" aria-hidden="true"></div><div class="msg">${message}</div>`;
+      wrap.appendChild(el);
+      setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'translateY(8px)'; }, 2600);
+      setTimeout(() => el.remove(), 3200);
+    }
+
+    // ===== Sticky header + burger + top =====
+    const header = document.querySelector('[data-header]');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 50);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    const burger = document.querySelector('[data-burger]');
+    const mobileNav = document.querySelector('[data-mobile-nav]');
+    burger?.addEventListener('click', () => mobileNav.classList.toggle('open'));
+    document.querySelector('[data-top]')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ===== Hash router =====
+    const views = Array.from(document.querySelectorAll('[data-view]'));
+    const links = Array.from(document.querySelectorAll('[data-link]'));
+    function setActiveView(name){
+      views.forEach(v => v.classList.toggle('active', v.getAttribute('data-view') === name));
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('data-link') === name));
+      mobileNav.classList.remove('open');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // reflow observers for newly shown view
+      setTimeout(() => refreshReveals(), 50);
+      // analytics redraw if needed
+      if(name === 'analytics') requestAnimationFrame(() => { drawLine(); drawDonutAnimated(); drawBars(); });
+    }
+    function getRoute(){
+      const h = (location.hash || '#home').replace('#','').trim();
+      return ['home','about','system','analytics','contact'].includes(h) ? h : 'home';
+    }
+    window.addEventListener('hashchange', () => setActiveView(getRoute()));
+    setActiveView(getRoute());
+
+    // ===== Particles (home) =====
+    const pWrap = document.querySelector('[data-particles]');
+    (function spawnParticles(){
+      if(!pWrap) return;
+      const count = 26;
+      for(let i=0;i<count;i++){
+        const d = document.createElement('div');
+        d.className = 'particle';
+        const size = 3 + Math.random()*10;
+        d.style.width = size + 'px';
+        d.style.height = size + 'px';
+        d.style.left = (Math.random()*100) + '%';
+        d.style.top = (Math.random()*100) + '%';
+        d.style.opacity = String(0.25 + Math.random()*0.55);
+        d.style.animationDuration = (7 + Math.random()*10) + 's';
+        d.style.animationDelay = (-Math.random()*10) + 's';
+        pWrap.appendChild(d);
+      }
+    })();
+
+    // ===== Counters =====
+    function animateCounter(el, target, duration = 1500){
+      const start = performance.now();
+      const isFloat = String(target).includes('.');
+      const suffix = el.dataset.suffix || '';
+      function frame(now){
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const val = target * eased;
+        el.textContent = (isFloat ? val.toFixed(1) : Math.round(val)) + suffix;
+        if(t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+    function runCounters(scope=document){
+      scope.querySelectorAll('[data-counter]').forEach(el => {
+        const target = Number(el.dataset.target || '0');
+        animateCounter(el, target, 1500);
+      });
+    }
+    document.querySelectorAll('[data-db-count]').forEach(el => el.textContent = '247');
+    runCounters(document);
+
+    // ===== Reveal observer =====
+    let io = null;
+    function refreshReveals(){
+      if(io) io.disconnect();
+      const revealEls = Array.from(document.querySelectorAll('.view.active .reveal'));
+      io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(!entry.isIntersecting) return;
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        });
+      }, { threshold: 0.12 });
+      revealEls.forEach(el => io.observe(el));
+    }
+    refreshReveals();
+
+    // ===== Video placeholder =====
+    const vw = document.querySelector('[data-video-wrapper]');
+    const source = vw?.querySelector('source')?.getAttribute('src') || '';
+    if(vw && source && !source.includes('YOUR_VIDEO_FILE')) vw.classList.add('has-src');
+
+    // ===== About table (methods) =====
+    const methodsOriginal = [
+      { name: "Ручной учёт",  accuracy: 72,  speed: 20,  cost: 10,   ai: "—",  rating: 2.1 },
+      { name: "Excel/таблицы",accuracy: 81,  speed: 35,  cost: 15,   ai: "—",  rating: 3.0 },
+      { name: "1С: Склад",    accuracy: 88,  speed: 55,  cost: 40,   ai: "частично", rating: 3.7 },
+      { name: "WMS-системы",  accuracy: 92,  speed: 70,  cost: 70,   ai: "частично", rating: 4.1 },
+      { name: "QR + ИИ ★",   accuracy: 98,  speed: 95,  cost: 55,   ai: "✅ полностью", rating: 4.9 },
+      { name: "Роботизация",  accuracy: 99,  speed: 98,  cost: 100,  ai: "✅ полностью", rating: 4.7 },
+    ];
+    let methods = methodsOriginal.map(x => ({...x}));
+    const tbodyMethods = document.querySelector('[data-methods-body]');
+    let sortState = { key: null, dir: 1 };
+    function rowHTML(m){
+      const isOur = m.name.includes("QR + ИИ");
+      const prog = (v) => `
+        <div style="display:grid; gap:8px">
+          <div class="mono" style="font-size:12px; color:rgba(241,245,249,0.85)">${v}%</div>
+          <div class="mini-bar"><span style="width:${v}%"></span></div>
+        </div>
+      `;
+      return `
+        <tr class="${isOur ? 'hl' : ''}">
+          <td>
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
+              <div style="font-weight:700">${m.name}</div>
+              ${isOur ? `<span class="method-badge">★ НАШ МЕТОД</span>` : ``}
+            </div>
+          </td>
+          <td>${prog(m.accuracy)}</td>
+          <td>${prog(m.speed)}</td>
+          <td class="mono">${m.cost}</td>
+          <td>${m.ai}</td>
+          <td class="mono">${m.rating.toFixed(1)}</td>
+        </tr>
+      `;
+    }
+    function renderMethods(){
+      if(!tbodyMethods) return;
+      tbodyMethods.innerHTML = methods.map(rowHTML).join('');
+    }
+    function sortBy(key){
+      if(sortState.key === key) sortState.dir *= -1;
+      else { sortState.key = key; sortState.dir = 1; }
+      const dir = sortState.dir;
+      methods = methods.slice().sort((a,b) => (a[key] - b[key]) * dir);
+      renderMethods();
+    }
+    document.querySelectorAll('[data-sort]').forEach(btn => btn.addEventListener('click', () => sortBy(btn.getAttribute('data-sort'))));
+    document.querySelector('[data-reset]')?.addEventListener('click', () => { methods = methodsOriginal.map(x => ({...x})); sortState = {key:null, dir:1}; renderMethods(); });
+    renderMethods();
+
+    // ===== System: QR + live table + modal + map =====
+    const frame = document.querySelector('[data-frame]');
+    const scanBtn = document.querySelector('[data-scan]');
+    const scanRandBtn = document.querySelector('[data-scan-rand]');
+    const logWrap = document.querySelector('[data-log]');
+    const lastTimeEl = document.querySelector('[data-last-time]');
+    const kv = {
+      sku: document.querySelector('[data-sku]'),
+      name: document.querySelector('[data-name]'),
+      qty: document.querySelector('[data-qty]'),
+      min: document.querySelector('[data-min]'),
+      loc: document.querySelector('[data-loc]'),
+      status: document.querySelector('[data-status]')
+    };
+    let scanLog = [];
+    function renderLog(){
+      if(!logWrap) return;
+      logWrap.innerHTML = scanLog.slice(0,5).map(x => `
+        <div class="log-item">
+          <div class="muted mono" style="font-size:12px">${x.time}</div>
+          <div style="margin-top:6px; line-height:1.5">${x.text}</div>
+        </div>
+      `).join('') || `<div class="muted">Пока пусто — нажмите “Сканировать товар”.</div>`;
+    }
+    function showScan(item){
+      const st = getStatus(item);
+      const t = nowTime();
+      lastTimeEl.textContent = t;
+      kv.sku.textContent = item.sku;
+      kv.name.textContent = item.name;
+      kv.qty.textContent = `${item.qty} шт`;
+      kv.min.textContent = `${item.min} шт`;
+      kv.loc.textContent = item.location;
+      kv.status.innerHTML = `<span class="status-pill ${st.class}">${st.label}</span>`;
+      scanLog.unshift({ time:t, text:`🔐 Сканирование QR: <span class="mono">${item.sku}</span> • ${item.name} • зона <span class="mono">${item.location}</span> • статус ${st.label}` });
+      scanLog = scanLog.slice(0, 20);
+      renderLog();
+    }
+    async function scan(){
+      if(!frame) return;
+      frame.classList.add('scanning');
+      scanBtn.disabled = true; scanRandBtn.disabled = true;
+      await new Promise(r => setTimeout(r, 1500));
+      const item = warehouseDB[Math.floor(Math.random() * warehouseDB.length)];
+      frame.classList.remove('scanning');
+      scanBtn.disabled = false; scanRandBtn.disabled = false;
+      showScan(item);
+      showToast('✅ Товар добавлен в журнал', 'success');
+    }
+    scanBtn?.addEventListener('click', scan);
+    document.querySelector('[data-clear-log]')?.addEventListener('click', () => { scanLog=[]; renderLog(); showToast('🧹 Журнал очищен', 'warn'); });
+    scanRandBtn?.addEventListener('click', () => {
+      const item = warehouseDB[Math.floor(Math.random() * warehouseDB.length)];
+      const add = 5 + Math.floor(Math.random() * 21);
+      item.qty += add;
+      showToast(`✅ Пополнение: "${item.name}" +${add} шт`, 'success');
+      renderWarehouse(); renderMap(); computeKPI(); drawDonutAnimated(); drawBars();
+    });
+    renderLog();
+
+    // Live table
+    const tbody = document.querySelector('[data-warehouse-body]');
+    const searchInput = document.querySelector('[data-search]');
+    const liveCount = document.querySelector('[data-live-count]');
+    let filterKey = 'all';
+    const prevQty = new Map();
+    let lastTickDelta = new Map();
+    function rowCls(key){
+      if(key === 'critical') return 'row-critical';
+      if(key === 'warning') return 'row-warning';
+      if(key === 'excess') return 'row-excess';
+      return 'row-ok';
+    }
+    function trendForDelta(d){
+      if(d > 0) return { label:'↑', cls:'up' };
+      if(d < 0) return { label:'↓', cls:'down' };
+      return { label:'→', cls:'flat' };
+    }
+    function matchesFilter(item){
+      const st = getStatus(item).key;
+      if(filterKey === 'all') return true;
+      return st === filterKey;
+    }
+    function matchesSearch(item){
+      const q = (searchInput?.value || '').trim().toLowerCase();
+      if(!q) return true;
+      return item.name.toLowerCase().includes(q);
+    }
+    function renderWarehouse(){
+      if(!tbody) return;
+      const rows = warehouseDB.filter(i => matchesFilter(i) && matchesSearch(i));
+      liveCount.textContent = String(rows.length);
+      tbody.innerHTML = rows.map((item, idx) => {
+        const st = getStatus(item);
+        const days = getDaysLeft(item);
+        const d = lastTickDelta.get(item.sku) ?? 0;
+        const tr = trendForDelta(d);
+        return `
+          <tr class="${rowCls(st.key)}" data-sku="${item.sku}">
+            <td class="mono">${idx + 1}</td>
+            <td class="mono">${item.sku}</td>
+            <td>${item.name}</td>
+            <td class="mono" data-qty-cell>${item.qty}</td>
+            <td class="mono">${item.min}</td>
+            <td><span class="status-pill ${st.class}">${st.label}</span></td>
+            <td class="mono">${days === 999 ? '∞' : days}</td>
+            <td><span class="trend ${tr.cls}">${tr.label}</span></td>
+            <td><button class="btn small" type="button" data-edit>✏️</button></td>
+          </tr>
+        `;
+      }).join('') || `<tr><td colspan="9" class="muted" style="padding:16px">Ничего не найдено.</td></tr>`;
+    }
+    function startAutoUpdate(){
+      warehouseDB.forEach(i => prevQty.set(i.sku, i.qty));
+      setInterval(() => {
+        warehouseDB.forEach(item => {
+          const before = item.qty;
+          item.qty = clampQty(item.qty + (Math.floor(Math.random() * 5) - 2));
+          lastTickDelta.set(item.sku, item.qty - (prevQty.get(item.sku) ?? item.qty));
+          prevQty.set(item.sku, item.qty);
+          if(before !== item.qty){
+            const tr = tbody?.querySelector(`tr[data-sku="${item.sku}"]`);
+            const qtyCell = tr?.querySelector('[data-qty-cell]');
+            if(qtyCell){
+              qtyCell.classList.remove('qty-flash'); void qtyCell.offsetWidth; qtyCell.classList.add('qty-flash');
+            }
+          }
+        });
+        renderWarehouse();
+        renderMap();
+        computeKPI();
+        drawDonutAnimated();
+        drawBars();
+        pushOneNews();
+      }, 4000);
+    }
+    tbody?.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-edit]');
+      if(!btn) return;
+      const tr = btn.closest('tr');
+      const sku = tr?.getAttribute('data-sku');
+      const item = warehouseDB.find(x => x.sku === sku);
+      if(!item) return;
+      if(tr.querySelector('input[data-qty-input]')) return;
+      const qtyCell = tr.querySelector('[data-qty-cell]');
+      const editCell = btn.parentElement;
+      const oldQty = item.qty;
+      qtyCell.innerHTML = `
+        <div class="qty-edit">
+          <input class="mono" data-qty-input type="number" min="0" value="${oldQty}" />
+          <button class="btn small primary" type="button" data-save>OK</button>
+          <button class="btn small" type="button" data-cancel>↩</button>
+        </div>
+      `;
+      editCell.innerHTML = `<span class="muted mono">редакт.</span>`;
+      const input = qtyCell.querySelector('input[data-qty-input]');
+      input.focus(); input.select();
+      function cancel(){ item.qty = oldQty; renderWarehouse(); renderMap(); computeKPI(); drawDonutAnimated(); drawBars(); showToast('↩ Изменение отменено', 'warn'); }
+      function save(){ item.qty = clampQty(input.value); renderWarehouse(); renderMap(); computeKPI(); drawDonutAnimated(); drawBars(); showToast('✅ Остаток обновлён', 'success'); }
+      input.addEventListener('keydown', (ev) => { if(ev.key==='Enter'){ev.preventDefault();save()} if(ev.key==='Escape'){ev.preventDefault();cancel()} });
+      qtyCell.querySelector('[data-save]')?.addEventListener('click', save);
+      qtyCell.querySelector('[data-cancel]')?.addEventListener('click', cancel);
+    });
+    document.querySelectorAll('[data-filter]').forEach(b => b.addEventListener('click', () => { filterKey = b.getAttribute('data-filter'); renderWarehouse(); }));
+    searchInput?.addEventListener('input', renderWarehouse);
+    searchInput?.addEventListener('keydown', (e) => { if(e.key==='Enter') e.preventDefault(); });
+
+    // CSV export
+    function exportCSV(){
+      const header = ['sku','name','qty','min','location','category','dailyUse','status','daysLeft'];
+      const lines = [header.join(',')];
+      warehouseDB.forEach(item => {
+        const st = getStatus(item).key;
+        const days = getDaysLeft(item);
+        lines.push([item.sku, `"${String(item.name).replaceAll('"','""')}"`, item.qty, item.min, item.location, `"${String(item.category).replaceAll('"','""')}"`, item.dailyUse, st, days].join(','));
+      });
+      const blob = new Blob([lines.join('\n')], { type:'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `warehouse_export_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      showToast('📊 CSV скачан', 'success');
+    }
+    document.querySelector('[data-export]')?.addEventListener('click', exportCSV);
+
+    // Modal add
+    const modal = document.querySelector('[data-modal]');
+    const closeModal = () => modal.classList.remove('open');
+    document.querySelector('[data-add]')?.addEventListener('click', () => modal.classList.add('open'));
+    document.querySelector('[data-close]')?.addEventListener('click', closeModal);
+    document.querySelector('[data-cancel]')?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
+    document.querySelector('[data-form]')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const sku = String(fd.get('sku') || '').trim();
+      if(warehouseDB.some(x => x.sku.toLowerCase() === sku.toLowerCase())) return showToast('❌ Такой SKU уже существует', 'error');
+      const item = {
+        sku,
+        name: String(fd.get('name') || '').trim(),
+        qty: clampQty(fd.get('qty')),
+        min: clampQty(fd.get('min')),
+        location: String(fd.get('location') || '').trim(),
+        category: String(fd.get('category') || '').trim(),
+        dailyUse: Math.max(0, Math.floor(Math.random() * 4))
+      };
+      warehouseDB.push(item);
+      prevQty.set(item.sku, item.qty);
+      lastTickDelta.set(item.sku, 0);
+      closeModal();
+      renderWarehouse(); renderMap(); computeKPI(); drawDonutAnimated(); drawBars();
+      showToast('✅ Товар добавлен', 'success');
+      e.target.reset();
+    });
+
+    // Map
+    const mapWrap = document.querySelector('[data-map]');
+    function mapCellClass(item){
+      if(!item) return 'free';
+      const key = getStatus(item).key;
+      if(key === 'critical') return 'crit';
+      if(key === 'warning') return 'warn';
+      if(key === 'excess') return 'excess';
+      return 'ok';
+    }
+    function renderMap(){
+      if(!mapWrap) return;
+      const cells = [];
+      for(let i=0;i<30;i++){
+        const item = warehouseDB[i] || null;
+        const cls = mapCellClass(item);
+        cells.push(`<div class="cell ${cls} ${!item ? 'free' : ''}" data-map-idx="${i}">${item ? `<span class="mono">${item.location}</span>` : `<span class="mono">пусто</span>`}</div>`);
+      }
+      mapWrap.innerHTML = cells.join('');
+    }
+    mapWrap?.addEventListener('click', (e) => {
+      const cell = e.target.closest('.cell');
+      if(!cell) return;
+      const i = Number(cell.getAttribute('data-map-idx'));
+      const item = warehouseDB[i];
+      if(!item) return showToast('⬜ Ячейка свободна', 'warn');
+      const st = getStatus(item);
+      const days = getDaysLeft(item);
+      showToast(`📦 ${item.name} • ${item.sku} • ${item.qty} шт • ${st.label} • ${days === 999 ? '∞' : days} дн`, 'success');
+    });
+    document.querySelector('[data-refresh-map]')?.addEventListener('click', () => { renderMap(); showToast('🔄 Карта обновлена', 'success'); });
+
+    // initial system render + auto update
+    renderWarehouse();
+    renderMap();
+    startAutoUpdate();
+
+    // ===== Analytics KPI + sparklines =====
+    function computeKPI(){
+      const attn = warehouseDB.filter(i => {
+        const k = getStatus(i).key;
+        return k === 'critical' || k === 'warning';
+      }).length;
+      const sum = warehouseDB.reduce((s,i)=> s + i.qty, 0);
+      const avg = Math.round(sum / warehouseDB.length);
+      document.querySelector('[data-kpi-total]').textContent = String(warehouseDB.length);
+      document.querySelector('[data-kpi-acc]').textContent = '98.7%';
+      document.querySelector('[data-kpi-attn]').textContent = String(attn);
+      document.querySelector('[data-kpi-avg]').textContent = `${avg} шт`;
+      const ico = document.querySelector('[data-warn-ico]');
+      if(ico) ico.textContent = attn > 0 ? '⚠️' : '✅';
+    }
+    computeKPI();
+
+    function drawSparkline(canvas){
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0,0,w,h);
+      const pts = Array.from({length:7}, () => rand(10, 90));
+      const pad = 10;
+      const min = Math.min(...pts), max = Math.max(...pts);
+      const xStep = (w - pad*2) / (pts.length - 1);
+      const y = (v) => {
+        if(max === min) return h/2;
+        const t = (v - min) / (max - min);
+        return (h - pad) - t * (h - pad*2);
+      };
+      ctx.fillStyle = 'rgba(255,255,255,0.02)';
+      ctx.fillRect(0,0,w,h);
+      ctx.strokeStyle = 'rgba(6,182,212,0.75)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      pts.forEach((v,i)=> { const x = pad + i*xStep; const yy = y(v); if(i===0) ctx.moveTo(x,yy); else ctx.lineTo(x,yy); });
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(37,99,235,0.85)';
+      pts.forEach((v,i)=> { const x = pad + i*xStep; const yy = y(v); ctx.beginPath(); ctx.arc(x, yy, 2.8, 0, Math.PI*2); ctx.fill(); });
+    }
+    document.querySelectorAll('[data-spark]').forEach(drawSparkline);
+
+    // ===== AI agent (10 sets × 6) =====
+    const feedEl = document.querySelector('[data-feed]');
+    const analysisEl = document.querySelector('[data-analysis]');
+    const loader = document.querySelector('[data-loader]');
+    const forecastEl = document.querySelector('[data-forecast]');
+    const recsEl = document.querySelector('[data-recs]');
+    function pickItemByStatus(key){
+      const arr = warehouseDB.filter(i => getStatus(i).key === key);
+      return arr.length ? arr[rand(0, arr.length-1)] : warehouseDB[rand(0, warehouseDB.length-1)];
+    }
+    function topUrgent(n=5){
+      return warehouseDB.map(i => ({...i, days:getDaysLeft(i)})).sort((a,b)=> a.days - b.days).slice(0,n);
+    }
+    const newsSets = Array.from({length:10}, (_,setIdx) => Array.from({length:6}, (_,i) => (db) => {
+      const crit = pickItemByStatus('critical');
+      const warn = pickItemByStatus('warning');
+      const any = db[rand(0, db.length-1)];
+      const zone = String.fromCharCode(65 + rand(0,5));
+      const urgent = topUrgent(1)[0];
+      const days = getDaysLeft(urgent);
+      const variants = [
+        () => `⚠️ Критический уровень: "${crit.name}" — осталось ${crit.qty} шт (мин: ${crit.min})`,
+        () => `✅ Пополнение: "${any.name}" +${rand(20,100)} шт, новый остаток: ${any.qty + rand(20,100)}`,
+        () => `🔍 Плановая инвентаризация зоны ${zone}: расхождение ${rand(0,3)}%`,
+        () => `📦 Новая поставка оформлена: ${rand(3,8)} позиций на сумму ${rand(100,500)}к тг`,
+        () => `🤖 AI‑прогноз обновлён: "${urgent.name}" потребует пополнения через ${days === 999 ? '∞' : days} дней`,
+        () => `🔐 Сканирование QR: "${any.name}", зона ${any.location}, оператор ID-${rand(10,99)}`,
+        () => `⚡ AI‑модуль: аномальный расход "${warn.name}" — +${rand(20,60)}% от нормы`,
+        () => `🔵 Излишек выявлен: "${pickItemByStatus('excess').name}" — рекомендуется перераспределение`,
+        () => `📊 Еженедельный отчёт: средняя точность учёта 98.${rand(3,9)}%`,
+        () => `🧾 Контроль качества: пересчёт партии "${any.sku}" — отклонение ${rand(0,2)}%`,
+      ];
+      return variants[(setIdx + i*3) % variants.length]();
+    }));
+    let feed = newsSets[0].map(fn => ({ time: nowTime(), text: fn(warehouseDB) }));
+    let activeSetIndex = 0;
+    function renderFeed(){
+      feedEl.innerHTML = feed.map(ev => `<div class="event"><div class="time mono">${ev.time}</div><div class="text">${ev.text}</div></div>`).join('');
+    }
+    function replaceWithSixNews(){
+      activeSetIndex = (activeSetIndex + 1) % newsSets.length;
+      const set = newsSets[activeSetIndex];
+      feed = set.map(fn => ({ time: nowTime(), text: fn(warehouseDB) }));
+      renderFeed();
+    }
+    function pushOneNews(){
+      const set = newsSets[activeSetIndex];
+      const fn = set[rand(0, set.length-1)];
+      feed.unshift({ time: nowTime(), text: fn(warehouseDB) });
+      feed = feed.slice(0, 20);
+      renderFeed();
+    }
+    renderFeed();
+    setInterval(pushOneNews, 6000);
+    document.querySelector('[data-refresh-feed]')?.addEventListener('click', replaceWithSixNews);
+
+    // Tabs
+    function setTab(name){
+      document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.getAttribute('data-tab') === name));
+      document.querySelectorAll('[data-panel]').forEach(p => p.style.display = (p.getAttribute('data-panel') === name) ? '' : 'none');
+      if(name === 'forecast') renderForecast();
+      if(name === 'recs') renderRecs();
+    }
+    document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => setTab(b.getAttribute('data-tab'))));
+
+    function renderForecast(){
+      const rows = warehouseDB.map(i => ({...i, days:getDaysLeft(i)})).sort((a,b)=> a.days - b.days);
+      forecastEl.innerHTML = rows.map(i => {
+        const prio = i.days < 5 ? 'prio-high' : (i.days <= 10 ? 'prio-med' : 'prio-low');
+        const pLabel = i.days < 5 ? '🔴 высокий' : (i.days <= 10 ? '🟡 средний' : '🟢 низкий');
+        return `<tr class="${prio}"><td>${i.name}</td><td class="mono">${i.qty}</td><td class="mono">${i.dailyUse}</td><td class="mono">${i.days === 999 ? '∞' : i.days}</td><td>${pLabel}</td></tr>`;
+      }).join('');
+    }
+    function renderRecs(){
+      const urgent = warehouseDB.map(i => ({...i, days:getDaysLeft(i), st:getStatus(i).key}))
+        .filter(i => i.st === 'critical' || i.st === 'warning' || i.days <= 10)
+        .sort((a,b)=> a.days - b.days)
+        .slice(0, 5);
+      const cards = urgent.length ? urgent : topUrgent(5);
+      recsEl.innerHTML = cards.slice(0,5).map(i => {
+        const isCritical = getStatus(i).key === 'critical' || i.days < 5;
+        const title = isCritical ? '🔴 СРОЧНО' : (i.days <= 10 ? '🟡 ПЛАНОВОЕ' : '🟢 НИЗКИЙ ПРИОРИТЕТ');
+        const recQty = Math.max(i.min*3, rand(10, 40));
+        const when = i.days === 999 ? 'когда появится расход' : `через ${Math.max(0, i.days)} дн`;
+        return `<div class="glass card"><div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap"><div style="font-weight:800">${title}</div><div class="badge"><span class="mono">${i.sku}</span></div></div><div style="margin-top:10px; line-height:1.6">Заказать “<b>${i.name}</b>” — <span class="mono">${recQty}</span> шт. Пополнение: <span class="mono">${when}</span>.</div><div class="muted" style="margin-top:8px">Основание: остаток ${i.qty}, min ${i.min}, расход/день ${i.dailyUse}.</div></div>`;
+      }).join('');
+    }
+    renderForecast();
+    renderRecs();
+
+    function buildAnalysisText(){
+      const date = new Date().toLocaleString('ru-RU', { hour12:false });
+      const critical = warehouseDB.filter(i => getStatus(i).key === 'critical');
+      const warning = warehouseDB.filter(i => getStatus(i).key === 'warning');
+      const need = warehouseDB.map(i => ({...i, days:getDaysLeft(i)})).filter(i => i.days !== 999 && i.days <= 7).sort((a,b)=> a.days - b.days).slice(0, 6);
+      const eff = `98.${rand(3,9)}%`;
+      const names = warning.slice(0,4).map(i => i.name).join(', ') || 'нет';
+      const needList = need.length ? need.map(i => `${i.name} (${i.days} дн)`).join('; ') : 'нет позиций с риском дефицита в ближайшие 7 дней';
+      return `Анализ склада выполнен ${date}. Критических позиций: ${critical.length}. Товары требующие внимания: ${warning.length > 0 ? names : 'нет'}. Прогнозируемая потребность в пополнении на ближайшие 7 дней: ${needList}. Общая эффективность системы: ${eff}.`;
+    }
+    function typewriter(el, text, speed = 16){
+      el.textContent = '';
+      let i = 0;
+      const timer = setInterval(() => {
+        el.textContent += text[i] || '';
+        i++;
+        if(i >= text.length) clearInterval(timer);
+      }, speed);
+    }
+    document.querySelector('[data-generate]')?.addEventListener('click', async () => {
+      loader.classList.add('show');
+      analysisEl.innerHTML = `<div class="muted">Подготовка отчёта…</div>`;
+      await new Promise(r => setTimeout(r, 1500));
+      loader.classList.remove('show');
+      const text = buildAnalysisText();
+      analysisEl.innerHTML = `<div class="mono" style="white-space:pre-wrap"></div>`;
+      typewriter(analysisEl.querySelector('.mono'), text, 14);
+    });
+
+    // ===== Charts =====
+    const tip = document.querySelector('[data-tip]');
+    function showTip(x,y,html){ tip.innerHTML = html; tip.style.left = (x+12)+'px'; tip.style.top = (y+12)+'px'; tip.classList.add('show'); }
+    function hideTip(){ tip.classList.remove('show'); }
+    let lastMove = 0;
+    const throttle60 = (fn) => (e) => { const now = performance.now(); if(now-lastMove < (1000/60)) return; lastMove = now; fn(e); };
+
+    function fitCanvas(canvas, fallbackH=300){
+      const rect = canvas.getBoundingClientRect();
+      const ratio = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+      const w = Math.max(320, Math.floor(rect.width));
+      const h = Math.max(200, Math.floor(rect.height || fallbackH));
+      canvas.width = w * ratio; canvas.height = h * ratio;
+      const ctx = canvas.getContext('2d'); ctx.setTransform(ratio,0,0,ratio,0,0);
+      return { w, h, ctx };
+    }
+
+    // Line
+    const lineCanvas = document.querySelector('[data-line]');
+    const lineItems = warehouseDB.slice(0,5);
+    const lineColors = ['rgba(6,182,212,0.95)','rgba(37,99,235,0.95)','rgba(16,185,129,0.95)','rgba(245,158,11,0.95)','rgba(239,68,68,0.95)'];
+    let rangeDays = 30;
+    let lineData = [];
+    function genLineData(days){
+      lineData = lineItems.map((item, idx) => {
+        const pts = [];
+        let base = item.qty;
+        for(let d=0; d<days; d++){ base = Math.max(0, base + rand(-4,4)); pts.push(base); }
+        return { name:item.name, sku:item.sku, color:lineColors[idx], pts };
+      });
+    }
+    function drawLine(){
+      if(!lineCanvas) return;
+      const { w, h, ctx } = fitCanvas(lineCanvas, 300);
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = 'rgba(255,255,255,0.02)'; ctx.fillRect(0,0,w,h);
+      const pad = { l:54, r:18, t:18, b:34 };
+      const plotW = w - pad.l - pad.r; const plotH = h - pad.t - pad.b;
+      const all = lineData.flatMap(s => s.pts);
+      const min = Math.min(...all), max = Math.max(...all);
+      const y = (v) => { if(max===min) return pad.t+plotH/2; const t=(v-min)/(max-min); return pad.t + (1-t)*plotH; };
+      const x = (i) => pad.l + (i/(rangeDays-1))*plotW;
+      ctx.strokeStyle='rgba(148,163,184,0.22)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(pad.l,pad.t); ctx.lineTo(pad.l,pad.t+plotH); ctx.lineTo(pad.l+plotW,pad.t+plotH); ctx.stroke();
+      ctx.fillStyle='rgba(148,163,184,0.85)'; ctx.font='12px Inter, sans-serif';
+      for(let i=0;i<=5;i++){
+        const tv=min+(i/5)*(max-min||1); const yy=y(tv);
+        ctx.fillText(String(Math.round(tv)), 10, yy+4);
+        ctx.strokeStyle='rgba(148,163,184,0.10)'; ctx.beginPath(); ctx.moveTo(pad.l,yy); ctx.lineTo(pad.l+plotW,yy); ctx.stroke();
+      }
+      ctx.fillStyle='rgba(148,163,184,0.75)';
+      for(let i=0;i<6;i++){ const idx=Math.floor(i*(rangeDays-1)/5); ctx.fillText(`д${idx+1}`, x(idx)-10, pad.t+plotH+24); }
+      lineData.forEach(series => {
+        ctx.strokeStyle=series.color; ctx.lineWidth=2; ctx.beginPath();
+        series.pts.forEach((v,i)=>{ const xx=x(i), yy=y(v); if(i===0) ctx.moveTo(xx,yy); else ctx.lineTo(xx,yy); });
+        ctx.stroke();
+      });
+      // legend
+      let off=0; const lx=pad.l, ly=8;
+      lineData.forEach(series=>{
+        ctx.fillStyle=series.color; ctx.fillRect(lx+off, ly, 10, 10);
+        ctx.fillStyle='rgba(241,245,249,0.85)'; ctx.fillText(series.name.length>18?series.name.slice(0,18)+'…':series.name, lx+off+14, ly+10);
+        off += 14 + ctx.measureText(series.name.length>18?series.name.slice(0,18)+'…':series.name).width + 18;
+      });
+    }
+    let hoverIndex = null;
+    function lineHit(mx,my,rectW,rectH){
+      const pad={l:54,r:18,t:18,b:34}; const plotW=rectW-pad.l-pad.r; const plotH=rectH-pad.t-pad.b;
+      if(mx<pad.l||mx>pad.l+plotW||my<pad.t||my>pad.t+plotH) return null;
+      const t=(mx-pad.l)/plotW; return Math.max(0, Math.min(rangeDays-1, Math.round(t*(rangeDays-1))));
+    }
+    function drawLineHover(idx, cx, cy){
+      drawLine();
+      const rect=lineCanvas.getBoundingClientRect(); const w=rect.width, h=rect.height;
+      const pad={l:54,r:18,t:18,b:34}; const plotW=w-pad.l-pad.r; const plotH=h-pad.t-pad.b;
+      const all=lineData.flatMap(s=>s.pts); const min=Math.min(...all), max=Math.max(...all);
+      const y=(v)=>{ if(max===min) return pad.t+plotH/2; const t=(v-min)/(max-min); return pad.t+(1-t)*plotH; };
+      const x=(i)=>pad.l+(i/(rangeDays-1))*plotW;
+      const ctx=lineCanvas.getContext('2d');
+      const xx=x(idx);
+      ctx.strokeStyle='rgba(241,245,249,0.22)'; ctx.beginPath(); ctx.moveTo(xx,pad.t); ctx.lineTo(xx,pad.t+plotH); ctx.stroke();
+      let html=`<div class="muted mono">День ${idx+1}/${rangeDays}</div>`;
+      lineData.forEach(series=>{
+        const v=series.pts[idx]; const yy=y(v);
+        ctx.fillStyle=series.color; ctx.beginPath(); ctx.arc(xx,yy,4,0,Math.PI*2); ctx.fill();
+        html += `<div style="margin-top:6px"><span class="mono">${series.sku}</span> — ${series.name.slice(0,22)}: <b class="mono">${v}</b></div>`;
+      });
+      showTip(cx, cy, html);
+    }
+    lineCanvas?.addEventListener('mousemove', throttle60((e)=>{
+      const rect=lineCanvas.getBoundingClientRect();
+      const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+      const idx=lineHit(mx,my,rect.width,rect.height);
+      if(idx===null){ hoverIndex=null; hideTip(); drawLine(); return; }
+      if(hoverIndex!==idx){ hoverIndex=idx; drawLineHover(idx,e.clientX,e.clientY); }
+      else if(tip.classList.contains('show')){ tip.style.left=(e.clientX+12)+'px'; tip.style.top=(e.clientY+12)+'px'; }
+    }));
+    lineCanvas?.addEventListener('mouseleave', ()=>{ hoverIndex=null; hideTip(); drawLine(); });
+    document.querySelectorAll('[data-range]').forEach(b=>b.addEventListener('click', ()=>{ rangeDays=Number(b.getAttribute('data-range')); genLineData(rangeDays); drawLine(); hideTip(); }));
+    genLineData(rangeDays);
+    drawLine();
+
+    // Donut
+    const donutCanvas = document.querySelector('[data-donut]');
+    const donutLegend = document.querySelector('[data-donut-legend]');
+    const okPctEl = document.querySelector('[data-ok-pct]');
+    const donutColors = {
+      ok: 'rgba(16,185,129,0.95)',
+      warning: 'rgba(245,158,11,0.95)',
+      critical: 'rgba(239,68,68,0.95)',
+      excess: 'rgba(37,99,235,0.95)',
+    };
+    function statusCounts(){
+      const c = { ok:0, warning:0, critical:0, excess:0 };
+      warehouseDB.forEach(i => { c[getStatus(i).key]++; });
+      return c;
+    }
+    function drawDonutAnimated(){
+      if(!donutCanvas) return;
+      const { w, h, ctx } = (() => {
+        const rect = donutCanvas.getBoundingClientRect();
+        const size = Math.min(Math.max(260, Math.floor(rect.width || 300)), 360);
+        const ratio = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+        donutCanvas.width = size * ratio; donutCanvas.height = size * ratio;
+        const ctx = donutCanvas.getContext('2d'); ctx.setTransform(ratio,0,0,ratio,0,0);
+        return { w:size, h:size, ctx };
+      })();
+      const cx=w/2, cy=h/2, r=Math.min(w,h)/2-14, inner=r*0.62;
+      const counts=statusCounts(); const total=warehouseDB.length;
+      const okPct = total ? Math.round((counts.ok/total)*100) : 0;
+      okPctEl.textContent = `${okPct}%`;
+      const parts = [
+        { key:'ok', label:'Норма', value:counts.ok, color:donutColors.ok },
+        { key:'warning', label:'Внимание', value:counts.warning, color:donutColors.warning },
+        { key:'critical', label:'Дефицит', value:counts.critical, color:donutColors.critical },
+        { key:'excess', label:'Излишек', value:counts.excess, color:donutColors.excess },
+      ].filter(p=>p.value>0);
+      donutLegend.innerHTML = parts.map(p=>{
+        const pct=Math.round((p.value/total)*100);
+        return `<div class="legend-row"><div class="l"><div class="legend-dot" style="background:${p.color}"></div><div>${p.label}</div></div><div class="mono">${pct}% • ${p.value}</div></div>`;
+      }).join('');
+      const start=performance.now(), duration=900;
+      function frame(now){
+        const t=Math.min(1,(now-start)/duration);
+        const eased=1-Math.pow(1-t,3);
+        ctx.clearRect(0,0,w,h);
+        ctx.fillStyle='rgba(255,255,255,0.02)'; ctx.fillRect(0,0,w,h);
+        let angle=-Math.PI/2;
+        parts.forEach(p=>{
+          const slice=(p.value/total)*Math.PI*2*eased;
+          ctx.beginPath();
+          ctx.strokeStyle=p.color;
+          ctx.lineWidth=r-inner;
+          ctx.arc(cx,cy,(r+inner)/2,angle,angle+slice);
+          ctx.stroke();
+          angle += (p.value/total)*Math.PI*2;
+        });
+        ctx.fillStyle='rgba(241,245,249,0.92)';
+        ctx.font='900 28px Orbitron, Inter, sans-serif';
+        const text=`${okPct}%`; const tw=ctx.measureText(text).width;
+        ctx.fillText(text,cx-tw/2,cy+8);
+        ctx.fillStyle='rgba(148,163,184,0.85)';
+        ctx.font='13px Inter, sans-serif';
+        const sub='в норме'; const sw=ctx.measureText(sub).width;
+        ctx.fillText(sub,cx-sw/2,cy+28);
+        if(t<1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    // Bars
+    const barsCanvas = document.querySelector('[data-bars]');
+    function topUrgentLocal(n=5){
+      return warehouseDB.map(i => ({...i, days:getDaysLeft(i)})).sort((a,b)=>a.days-b.days).slice(0,n);
+    }
+    function drawBars(){
+      if(!barsCanvas) return;
+      const { w, h, ctx } = fitCanvas(barsCanvas, 280);
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle='rgba(255,255,255,0.02)'; ctx.fillRect(0,0,w,h);
+      const top = topUrgentLocal(5);
+      const maxDays = Math.max(...top.map(i => i.days === 999 ? 30 : i.days), 1);
+      const pad={l:220,r:30,t:18,b:18};
+      const barH=Math.floor((h-pad.t-pad.b)/top.length)-10;
+      const plotW=w-pad.l-pad.r;
+      ctx.font='13px Inter, sans-serif';
+      top.forEach((i, idx)=>{
+        const y=pad.t+idx*(barH+10);
+        const days=i.days===999?30:i.days;
+        const pct=Math.max(0.06, days/maxDays);
+        const bw=Math.floor(plotW*pct);
+        const col=(i.days<5)?'rgba(239,68,68,0.90)':(i.days<=10?'rgba(245,158,11,0.90)':'rgba(16,185,129,0.88)');
+        ctx.fillStyle='rgba(241,245,249,0.88)';
+        const name=i.name.length>20?i.name.slice(0,20)+'…':i.name;
+        ctx.fillText(name,14,y+barH-4);
+        ctx.fillStyle='rgba(148,163,184,0.14)'; roundRect(ctx,pad.l,y,plotW,barH,12); ctx.fill();
+        ctx.fillStyle=col; roundRect(ctx,pad.l,y,bw,barH,12); ctx.fill();
+        ctx.fillStyle='rgba(241,245,249,0.90)';
+        ctx.font='700 13px "JetBrains Mono", ui-monospace';
+        const txt=i.days===999?'∞ дней':`${i.days} дней`;
+        ctx.fillText(txt,pad.l+bw+10,y+barH-6);
+        ctx.font='13px Inter, sans-serif';
+      });
+      function roundRect(ctx,x,y,w,h,r){
+        const rr=Math.min(r,w/2,h/2);
+        ctx.beginPath();
+        ctx.moveTo(x+rr,y);
+        ctx.arcTo(x+w,y,x+w,y+h,rr);
+        ctx.arcTo(x+w,y+h,x,y+h,rr);
+        ctx.arcTo(x,y+h,x,y,rr);
+        ctx.arcTo(x,y,x+w,y,rr);
+        ctx.closePath();
+      }
+    }
+    document.querySelector('[data-refresh-bars]')?.addEventListener('click', ()=>{
+      warehouseDB.forEach(i => i.qty = Math.max(0, i.qty + rand(-2,2)));
+      renderWarehouse(); renderMap(); computeKPI(); drawDonutAnimated(); drawBars(); pushOneNews();
+    });
+
+    // Initial analytics draws
+    drawDonutAnimated();
+    drawBars();
+
+    // Resize redraw
+    window.addEventListener('resize', () => {
+      drawLine();
+      drawDonutAnimated();
+      drawBars();
+    }, { passive:true });
+
+    // ===== Music player =====
+    const audio = document.getElementById('bgMusic');
+    const playBtn = document.querySelector('[data-play]');
+    const prevBtn = document.querySelector('[data-prev]');
+    const nextBtn = document.querySelector('[data-next]');
+    const progress = document.querySelector('[data-progress]');
+    const bar = document.querySelector('[data-progress-bar]');
+    const timeEl = document.querySelector('[data-time]');
+    const durEl = document.querySelector('[data-dur]');
+    const vol = document.querySelector('[data-vol]');
+    const volVal = document.querySelector('[data-vol-val]');
+    const stateEl = document.querySelector('[data-track-state]');
+    const mini = document.querySelector('[data-mini]');
+    const miniToggle = document.querySelector('[data-mini-toggle]');
+    const miniClose = document.querySelector('[data-mini-close]');
+    const miniPlay = document.querySelector('[data-mini-play]');
+    const miniTime = document.querySelector('[data-mini-time]');
+    const miniState = document.querySelector('[data-mini-state]');
+    function fmt(sec){
+      if(!isFinite(sec)) return '0:00';
+      sec=Math.max(0,Math.floor(sec));
+      const m=Math.floor(sec/60);
+      const s=String(sec%60).padStart(2,'0');
+      return `${m}:${s}`;
+    }
+    function setState(){
+      const playing = !audio.paused && !audio.ended;
+      stateEl.textContent = playing ? '▶ Играет' : '⏸ Пауза';
+      miniState.textContent = playing ? '▶' : '⏸';
+    }
+    function update(){
+      const cur = audio.currentTime || 0;
+      const dur = audio.duration || 0;
+      const p = dur ? (cur/dur)*100 : 0;
+      bar.style.width = `${p}%`;
+      timeEl.textContent = fmt(cur);
+      durEl.textContent = fmt(dur);
+      miniTime.textContent = fmt(cur);
+      setState();
+    }
+    playBtn?.addEventListener('click', async () => {
+      try{ if(audio.paused) await audio.play(); else audio.pause(); }catch{ audio.pause(); }
+      setState();
+    });
+    miniPlay?.addEventListener('click', () => playBtn?.click());
+    prevBtn?.addEventListener('click', () => { audio.currentTime = 0; update(); });
+    nextBtn?.addEventListener('click', () => { audio.currentTime = Math.max(0, (audio.duration || 0) - 1); update(); });
+    progress?.addEventListener('click', (e) => {
+      const rect = progress.getBoundingClientRect();
+      const t = (e.clientX - rect.left) / rect.width;
+      if(isFinite(audio.duration)) audio.currentTime = Math.max(0, Math.min(audio.duration, t*audio.duration));
+      update();
+    });
+    vol?.addEventListener('input', () => { audio.volume = Number(vol.value); volVal.textContent = `${Math.round(audio.volume*100)}%`; });
+    audio.volume = Number(vol?.value || 0.7);
+    volVal.textContent = `${Math.round(audio.volume*100)}%`;
+    audio.addEventListener('timeupdate', update);
+    audio.addEventListener('loadedmetadata', update);
+    audio.addEventListener('play', setState);
+    audio.addEventListener('pause', setState);
+    update();
+    miniToggle?.addEventListener('click', () => mini.classList.toggle('show'));
+    miniClose?.addEventListener('click', () => mini.classList.remove('show'));
+  </script>
+</body>
+</html>
