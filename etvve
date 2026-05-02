@@ -1104,12 +1104,12 @@
 
   <footer class="site-footer">
     <div class="container">
-      <div class="footer-inner">
+      <div class="footer-inner"> 
         <div class="muted" style="line-height:1.7">
-          <div style="color:rgba(241,245,249,0.92); font-weight:700">Орлов Борис Вячеславович</div>
+          <div style="color:rgba(241,245,249,0.92); font-weight:700">Орлов Богдан Владимирович </div>
           <div>Дисциплина: Информационно-коммуникационные технологии (ИКТ)</div>
-          <div>Учебное заведение / факультет: <span style="opacity:.85">[вставить]</span></div>
-          <div>Образовательная программа: <span style="opacity:.85">[вставить]</span></div>
+          <div>Учебное заведение / факультет: <span style="opacity:.85">[Narxoz University]</span></div>
+          <div>Образовательная программа: <span style="opacity:.85">[Юриспруденция]</span></div>
           <div>© 2025</div>
         </div>
         <div class="footer-right">
