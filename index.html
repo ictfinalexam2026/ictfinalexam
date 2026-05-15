@@ -1005,7 +1005,7 @@
 
           <div class="glass music-player reveal" style="margin-top:16px">
            <audio id="bgMusic" loop autoplay muted>
-           <source src="materials/music.mp3" type="audio/mp3">
+           <source src="materials/music.mp3" type="audio/mpeg">
            </audio>
               <div class="track">
               <div class="meta">
@@ -1992,6 +1992,7 @@
     const miniPlay = document.querySelector('[data-mini-play]');
     const miniTime = document.querySelector('[data-mini-time]');
     const miniState = document.querySelector('[data-mini-state]');
+    document.addEventListener('click', () => { audio.muted = false; audio.play(); }, { once: true });
     function fmt(sec){
       if(!isFinite(sec)) return '0:00';
       sec=Math.max(0,Math.floor(sec));
